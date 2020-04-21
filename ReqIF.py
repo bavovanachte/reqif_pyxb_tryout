@@ -5,7 +5,11 @@ from raw.ReqIF import *
 from pyxb.binding.datatypes import dateTime
 
 # Construct the header
-a = REQ_IF();
+a = REQ_IF(
+    THE_HEADER=pyxb.BIND(),
+    CORE_CONTENT=pyxb.BIND(),
+    TOOL_EXTENSIONS=pyxb.BIND(),
+    );
 header = REQ_IF_HEADER(
     IDENTIFIER = "abcd",
     COMMENT = "abcd",
@@ -15,7 +19,7 @@ header = REQ_IF_HEADER(
     REQ_IF_VERSION = "1.0",
     SOURCE_TOOL_ID = "",
     TITLE = "")
-a.THE_HEADER = pyxb.BIND(REQ_IF_HEADER=header)
+a.THE_HEADER.REQ_IF_HEADER=header
 
 content = REQ_IF_CONTENT(
     SPEC_TYPES = pyxb.BIND(),
@@ -24,7 +28,9 @@ content = REQ_IF_CONTENT(
     SPEC_RELATIONS=pyxb.BIND(),
     SPECIFICATIONS=pyxb.BIND(),
     SPEC_RELATION_GROUPS=pyxb.BIND())
-a.CORE_CONTENT = pyxb.BIND(REQ_IF_CONTENT=content)
+a.CORE_CONTENT.REQ_IF_CONTENT=content
+
+a.CORE_CONTENT.REQ_IF_CONTENT.DATATYPES.append(DATATYPE_DEFINITION_XHTML(IDENTIFIER="_2", LAST_CHANGE="2020-04-17T13:45:20.184759", LONG_NAME="xhtml"))
 
 # The specification types
 col1_attribute = ATTRIBUTE_DEFINITION_XHTML(IDENTIFIER = "_4", LAST_CHANGE = dateTime.today(), LONG_NAME= "Col1", TYPE="_2")
@@ -63,11 +69,22 @@ requirement_7.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_5", THE_VALUE=pyx
 a.CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS.append(requirement_6)
 a.CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS.append(requirement_7)
 
+
+spec = SPECIFICATION(
+    IDENTIFIER="_ea4773d4-80a0-11ea-851b-185e0f0f4bc8",
+    LAST_CHANGE=dateTime.today(),
+    TYPE="_doc_type_ref",
+    CHILDREN=pyxb.BIND())
+spec.CHILDREN.append(SPEC_HIERARCHY(IDENTIFIER="_ea4773d5-80a0-11ea-851b-185e0f0f4bc8", LAST_CHANGE=dateTime.today(), OBJECT="_6"))
+spec.CHILDREN.append(SPEC_HIERARCHY(IDENTIFIER="_ea4773d6-80a0-11ea-851b-185e0f0f4bc8", LAST_CHANGE=dateTime.today(), OBJECT="_7"))
+a.CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS.append(spec)
+
+
 # Relationships between requirements
 a.CORE_CONTENT.REQ_IF_CONTENT.SPEC_RELATIONS.append(SPEC_RELATION(IDENTIFIER="_self_link", LAST_CHANGE=dateTime.today(), SOURCE="_6", TARGET="_7", TYPE="_1link_type"))
 
 # print(a.CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES)
-a.TOOL_EXTENSIONS = pyxb.BIND(REQ_IF_TOOL_EXTENSION())
+a.TOOL_EXTENSIONS.REQ_IF_TOOL_EXTENSION.append(REQ_IF_TOOL_EXTENSION())
 
 try:
     print(a.toxml());
