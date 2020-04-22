@@ -18,8 +18,8 @@ datatype_xhtml = DATATYPE_DEFINITION_XHTML(IDENTIFIER=gen_id, LAST_CHANGE=dateTi
 content.add_datatype(datatype_xhtml)
 
 # The specification types
-col1_attribute = ATTRIBUTE_DEFINITION_XHTML(long_name= "Text", datatype=datatype_xhtml)
-col2_attribute = ATTRIBUTE_DEFINITION_XHTML(long_name= "Author", datatype=datatype_xhtml)
+col1_attribute = ATTRIBUTE_DEFINITION_XHTML(long_name="Text", datatype=datatype_xhtml)
+col2_attribute = ATTRIBUTE_DEFINITION_XHTML(long_name="Author", datatype=datatype_xhtml)
 requirement_object_type = SPEC_OBJECT_TYPE(
     IDENTIFIER = "REQUIREMENT_TYPE",
     LAST_CHANGE = dateTime.today(),
@@ -44,24 +44,24 @@ content.add_spectype(specification_type)
 
 # The actual requirements
 requirement_1 = SPEC_OBJECT(identifier="SWRQT-ANGLE_CALCUL", spectype=requirement_object_type)
-requirement_1.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_4", THE_VALUE=pyxb.BIND(div="Hallo")))
-requirement_1.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_5", THE_VALUE=pyxb.BIND(div="Hallo2")))
+requirement_1.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col1_attribute, value="Hallo"))
+requirement_1.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col2_attribute, value="Hallo2"))
 content.add_specobject(requirement_1)
 
 requirement_2 = SPEC_OBJECT(identifier="SWRQT-FIELD_CALCUL", spectype=requirement_object_type)
-requirement_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_4", THE_VALUE=pyxb.BIND(div="Hallo3")))
-requirement_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_5", THE_VALUE=pyxb.BIND(div="Hallo4")))
+requirement_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col1_attribute, value="Hallo3"))
+requirement_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col2_attribute, value="Hallo4"))
 content.add_specobject(requirement_2)
 
 # The actual requirements
 utest_1 = SPEC_OBJECT(identifier="UTEST-ANGLE_CALCUL", spectype=test_object_type)
-utest_1.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_4", THE_VALUE=pyxb.BIND(div="Utest_1")))
-utest_1.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_5", THE_VALUE=pyxb.BIND(div="utest_2")))
+utest_1.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col1_attribute, value="Utest_1"))
+utest_1.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col2_attribute, value="utest_2"))
 content.add_specobject(utest_1)
 
 utest_2 = SPEC_OBJECT(identifier="UTEST-FIELD_CALCUL", spectype=test_object_type)
-utest_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_4", THE_VALUE=pyxb.BIND(div="Utest_3")))
-utest_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_5", THE_VALUE=pyxb.BIND(div="Utest_4")))
+utest_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col1_attribute, value="Utest_3"))
+utest_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col2_attribute, value="Utest_4"))
 content.add_specobject(utest_2)
 
 

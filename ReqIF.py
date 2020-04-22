@@ -204,3 +204,23 @@ class ATTRIBUTE_DEFINITION_XHTML(raw_reqif.ATTRIBUTE_DEFINITION_XHTML):
             TYPE=datatype_local)
 
 raw_reqif.ATTRIBUTE_DEFINITION_XHTML._SetSupersedingClass(ATTRIBUTE_DEFINITION_XHTML)
+
+class ATTRIBUTE_VALUE_XHTML(raw_reqif.ATTRIBUTE_VALUE_XHTML):
+    '''
+    Args:
+        definition (ATTRIBUTE_DEFINITION_XHTML or str): The attribute definition file
+            This can be either:
+            - An instance of a ATTRIBUTE_DEFINITION_XHTML. In that case, the ID gets extracted.
+            - The ID of the ATTRIBUTE_DEFINITION_XHTML in question
+        value (str): The value
+    '''
+    def __init__(self, definition, value):
+        if isinstance(definition, str):
+            definition_local = definition
+        else:
+            definition_local = str(definition.IDENTIFIER)
+        super().__init__(
+            DEFINITION=definition_local,
+            THE_VALUE=pyxb.BIND(div=value))
+
+raw_reqif.ATTRIBUTE_VALUE_XHTML._SetSupersedingClass(ATTRIBUTE_VALUE_XHTML)
