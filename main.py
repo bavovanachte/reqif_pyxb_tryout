@@ -16,9 +16,9 @@ content.add_datatype(DATATYPE_DEFINITION_XHTML(IDENTIFIER="_2", LAST_CHANGE=date
 col1_attribute = ATTRIBUTE_DEFINITION_XHTML(IDENTIFIER = "_4", LAST_CHANGE = dateTime.today(), LONG_NAME= "Col1", TYPE="_2")
 col2_attribute = ATTRIBUTE_DEFINITION_XHTML(IDENTIFIER = "_5", LAST_CHANGE = dateTime.today(), LONG_NAME= "Col2", TYPE="_2")
 requirement_object_type = SPEC_OBJECT_TYPE(
-    IDENTIFIER = "_3",
+    IDENTIFIER = "REQUIREMENT_TYPE",
     LAST_CHANGE = dateTime.today(),
-    LONG_NAME= "requirement Type",
+    LONG_NAME= "Requirement",
     SPEC_ATTRIBUTES = pyxb.BIND(col1_attribute, col2_attribute)
 )
 spec_relation_type = SPEC_RELATION_TYPE(IDENTIFIER="_1link_type", LAST_CHANGE=dateTime.today(), LONG_NAME="selflink")
@@ -31,19 +31,11 @@ content.add_spectype(specification_type)
 
 
 # The actual requirements
-requirement_6 = SPEC_OBJECT(
-    IDENTIFIER="_6",
-    LAST_CHANGE=dateTime.today(),
-    TYPE="_3",
-    VALUES=pyxb.BIND())
+requirement_6 = SPEC_OBJECT(identifier="SWRQT-ANGLE_CALCULATION", spectype=requirement_object_type)
 requirement_6.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_4", THE_VALUE=pyxb.BIND(div="Hallo")))
 requirement_6.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_5", THE_VALUE=pyxb.BIND(div="Hallo2")))
 
-requirement_7 = SPEC_OBJECT(
-    IDENTIFIER="_7",
-    LAST_CHANGE=dateTime.today(),
-    TYPE="_3",
-    VALUES=pyxb.BIND())
+requirement_7 = SPEC_OBJECT(identifier="SWRQT-FIELD_CALCULATION", spectype=requirement_object_type)
 requirement_7.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_4", THE_VALUE=pyxb.BIND(div="Hallo3")))
 requirement_7.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_5", THE_VALUE=pyxb.BIND(div="Hallo4")))
 
@@ -51,9 +43,10 @@ content.add_specobject(requirement_6)
 content.add_specobject(requirement_7)
 
 spec = SPECIFICATION(
-    IDENTIFIER="_ea4773d4-80a0-11ea-851b-185e0f0f4bc8",
+    IDENTIFIER="SW_SPEC",
     LAST_CHANGE=dateTime.today(),
     TYPE="_doc_type_ref",
+    LONG_NAME="SW specification",
     CHILDREN=pyxb.BIND())
 spec.CHILDREN.append(SPEC_HIERARCHY(IDENTIFIER="_ea4773d5-80a0-11ea-851b-185e0f0f4bc8", LAST_CHANGE=dateTime.today(), OBJECT="_6"))
 spec.CHILDREN.append(SPEC_HIERARCHY(IDENTIFIER="_ea4773d6-80a0-11ea-851b-185e0f0f4bc8", LAST_CHANGE=dateTime.today(), OBJECT="_7"))

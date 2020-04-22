@@ -17,7 +17,7 @@ from pyxb.binding.datatypes import dateTime
 # REQ_IF_._SetSupersedingClass(REQ_IF_x)
 
 class REQ_IF_CONTENT(raw_reqif.REQ_IF_CONTENT):
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         super().__init__(
             SPEC_TYPES = pyxb.BIND(),
             DATATYPES=pyxb.BIND(),
@@ -55,3 +55,29 @@ class REQ_IF_HEADER(raw_reqif.REQ_IF_HEADER):
         )
 raw_reqif.REQ_IF_HEADER._SetSupersedingClass(REQ_IF_HEADER)
 
+
+
+class SPEC_OBJECT(raw_reqif.SPEC_OBJECT):
+    '''
+    Args:
+        identifier (str): The unique identifier
+        spectype (SPEC_OBJECT_TYPE or str): The specification type.
+            This can be either:
+            - An instance of a SPEC_OBJECT_TYPE. In that case, the ID gets extracted.
+            - The ID of the SPEC_OBJECT_TYPE in question
+        longname (str): The more descriptive name of the spec object.
+            If none is passed, this value is set to the same value as "identifier"
+    '''
+    def __init__(self, identifier, spectype, longname=""):
+        if isinstance(spectype, str):
+            spectype_local = spectype
+        else:
+            spectype_local = str(spectype.IDENTIFIER)
+        super().__init__(
+            IDENTIFIER=identifier,
+            LAST_CHANGE=dateTime.today(),
+            TYPE=spectype_local,
+            VALUES=pyxb.BIND(),
+            LONG_NAME=longname if longname else identifier,)
+
+raw_reqif.SPEC_OBJECT._SetSupersedingClass(SPEC_OBJECT)
