@@ -1,92 +1,57 @@
 # -*- coding: utf-8 -*-
 from raw.ReqIF import *
+import raw.ReqIF as raw_reqif
 
 
 from pyxb.binding.datatypes import dateTime
 
-# Construct the header
-a = REQ_IF(
-    THE_HEADER=pyxb.BIND(),
-    CORE_CONTENT=pyxb.BIND(),
-    TOOL_EXTENSIONS=pyxb.BIND(),
-    );
-header = REQ_IF_HEADER(
-    IDENTIFIER = "abcd",
-    COMMENT = "abcd",
-    CREATION_TIME = dateTime.today(),
-    REPOSITORY_ID = "",
-    REQ_IF_TOOL_ID = "",
-    REQ_IF_VERSION = "1.0",
-    SOURCE_TOOL_ID = "",
-    TITLE = "")
-a.THE_HEADER.REQ_IF_HEADER=header
 
-content = REQ_IF_CONTENT(
-    SPEC_TYPES = pyxb.BIND(),
-    DATATYPES=pyxb.BIND(),
-    SPEC_OBJECTS=pyxb.BIND(),
-    SPEC_RELATIONS=pyxb.BIND(),
-    SPECIFICATIONS=pyxb.BIND(),
-    SPEC_RELATION_GROUPS=pyxb.BIND())
-a.CORE_CONTENT.REQ_IF_CONTENT=content
+# class REQ_IF_x(REQ_IF_):
+#     def __init__(self):
+#         super().__init__(
+#             THE_HEADER=pyxb.BIND(),
+#             CORE_CONTENT=pyxb.BIND(),
+#             TOOL_EXTENSIONS=pyxb.BIND(),
+#         )
 
-a.CORE_CONTENT.REQ_IF_CONTENT.DATATYPES.append(DATATYPE_DEFINITION_XHTML(IDENTIFIER="_2", LAST_CHANGE="2020-04-17T13:45:20.184759", LONG_NAME="xhtml"))
+# REQ_IF_._SetSupersedingClass(REQ_IF_x)
 
-# The specification types
-col1_attribute = ATTRIBUTE_DEFINITION_XHTML(IDENTIFIER = "_4", LAST_CHANGE = dateTime.today(), LONG_NAME= "Col1", TYPE="_2")
-col2_attribute = ATTRIBUTE_DEFINITION_XHTML(IDENTIFIER = "_5", LAST_CHANGE = dateTime.today(), LONG_NAME= "Col2", TYPE="_2")
-requirement_object_type = SPEC_OBJECT_TYPE(
-    IDENTIFIER = "_3",
-    LAST_CHANGE = dateTime.today(),
-    LONG_NAME= "requirement Type",
-    SPEC_ATTRIBUTES = pyxb.BIND(col1_attribute, col2_attribute)
-)
-spec_relation_type = SPEC_RELATION_TYPE(IDENTIFIER="_1link_type", LAST_CHANGE=dateTime.today(), LONG_NAME="selflink")
-specification_type = SPECIFICATION_TYPE(IDENTIFIER="_doc_type_ref", LAST_CHANGE=dateTime.today(), LONG_NAME="doc_type")
-
-# a.CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES = pyxb.BIND()
-a.CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES.append(requirement_object_type)
-a.CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES.append(spec_relation_type)
-a.CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES.append(specification_type)
+class REQ_IF_CONTENT(raw_reqif.REQ_IF_CONTENT):
+    def __init__(self):
+        super().__init__(
+            SPEC_TYPES = pyxb.BIND(),
+            DATATYPES=pyxb.BIND(),
+            SPEC_OBJECTS=pyxb.BIND(),
+            SPEC_RELATIONS=pyxb.BIND(),
+            SPECIFICATIONS=pyxb.BIND(),
+            SPEC_RELATION_GROUPS=pyxb.BIND()
+        )
+    def add_datatype(self, datatype):
+        self.DATATYPES.append(datatype)
+    def add_spectype(self, spectype):
+        self.SPEC_TYPES.append(spectype)
+    def add_specobject(self, specobject):
+        self.SPEC_OBJECTS.append(specobject)
+    def add_specification(self, specification):
+        self.SPECIFICATIONS.append(specification)
+    def add_spec_relation(self, spec_relation):
+        self.SPEC_RELATIONS.append(spec_relation)
+    def add_spec_relation_group(self, spec_relation_group):
+        self.SPEC_RELATION_GROUPS.append(spec_relation_group)
+raw_reqif.REQ_IF_CONTENT._SetSupersedingClass(REQ_IF_CONTENT)
 
 
-# The actual requirements
-requirement_6 = SPEC_OBJECT(
-    IDENTIFIER="_6",
-    LAST_CHANGE=dateTime.today(),
-    TYPE="_3",
-    VALUES=pyxb.BIND())
-requirement_6.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_4", THE_VALUE=pyxb.BIND(div="Hallo")))
-requirement_6.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_5", THE_VALUE=pyxb.BIND(div="Hallo2")))
+class REQ_IF_HEADER(raw_reqif.REQ_IF_HEADER):
+    def __init__(self, identifier):
+        super().__init__(
+            IDENTIFIER = identifier,
+            COMMENT = "",
+            CREATION_TIME = dateTime.today(),
+            REPOSITORY_ID = "",
+            REQ_IF_TOOL_ID = "",
+            REQ_IF_VERSION = "1.0",
+            SOURCE_TOOL_ID = "",
+            TITLE = ""
+        )
+raw_reqif.REQ_IF_HEADER._SetSupersedingClass(REQ_IF_HEADER)
 
-requirement_7 = SPEC_OBJECT(
-    IDENTIFIER="_7",
-    LAST_CHANGE=dateTime.today(),
-    TYPE="_3",
-    VALUES=pyxb.BIND())
-requirement_7.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_4", THE_VALUE=pyxb.BIND(div="Hallo3")))
-requirement_7.VALUES.append(ATTRIBUTE_VALUE_XHTML(DEFINITION="_5", THE_VALUE=pyxb.BIND(div="Hallo4")))
-a.CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS.append(requirement_6)
-a.CORE_CONTENT.REQ_IF_CONTENT.SPEC_OBJECTS.append(requirement_7)
-
-
-spec = SPECIFICATION(
-    IDENTIFIER="_ea4773d4-80a0-11ea-851b-185e0f0f4bc8",
-    LAST_CHANGE=dateTime.today(),
-    TYPE="_doc_type_ref",
-    CHILDREN=pyxb.BIND())
-spec.CHILDREN.append(SPEC_HIERARCHY(IDENTIFIER="_ea4773d5-80a0-11ea-851b-185e0f0f4bc8", LAST_CHANGE=dateTime.today(), OBJECT="_6"))
-spec.CHILDREN.append(SPEC_HIERARCHY(IDENTIFIER="_ea4773d6-80a0-11ea-851b-185e0f0f4bc8", LAST_CHANGE=dateTime.today(), OBJECT="_7"))
-a.CORE_CONTENT.REQ_IF_CONTENT.SPECIFICATIONS.append(spec)
-
-
-# Relationships between requirements
-a.CORE_CONTENT.REQ_IF_CONTENT.SPEC_RELATIONS.append(SPEC_RELATION(IDENTIFIER="_self_link", LAST_CHANGE=dateTime.today(), SOURCE="_6", TARGET="_7", TYPE="_1link_type"))
-
-# print(a.CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES)
-a.TOOL_EXTENSIONS.REQ_IF_TOOL_EXTENSION.append(REQ_IF_TOOL_EXTENSION())
-
-try:
-    print(a.toxml());
-except Exception as e:
-    print(e.details())
