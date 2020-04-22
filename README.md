@@ -1,3 +1,3 @@
 # ReqIF python bindings
 
-![Image description](pyreqif_architecture)
+![Image description](pyreqif architecture.png)
