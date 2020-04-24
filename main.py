@@ -43,23 +43,23 @@ content.add_spectype(specification_type)
 
 
 # The actual requirements
-requirement_1 = SPEC_OBJECT(identifier="SWRQT-ANGLE_CALCUL", spectype=requirement_object_type)
+requirement_1 = SPEC_OBJECT(IDENTIFIER="SWRQT-ANGLE_CALCUL", spectype=requirement_object_type)
 requirement_1.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col1_attribute, value="Hallo"))
 requirement_1.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col2_attribute, value="Hallo2"))
 content.add_specobject(requirement_1)
 
-requirement_2 = SPEC_OBJECT(identifier="SWRQT-FIELD_CALCUL", spectype=requirement_object_type)
+requirement_2 = SPEC_OBJECT(IDENTIFIER="SWRQT-FIELD_CALCUL", spectype=requirement_object_type)
 requirement_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col1_attribute, value="Hallo3"))
 requirement_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col2_attribute, value="Hallo4"))
 content.add_specobject(requirement_2)
 
 # The actual requirements
-utest_1 = SPEC_OBJECT(identifier="UTEST-ANGLE_CALCUL", spectype=test_object_type)
+utest_1 = SPEC_OBJECT(IDENTIFIER="UTEST-ANGLE_CALCUL", spectype=test_object_type)
 utest_1.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col1_attribute, value="Utest_1"))
 utest_1.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col2_attribute, value="utest_2"))
 content.add_specobject(utest_1)
 
-utest_2 = SPEC_OBJECT(identifier="UTEST-FIELD_CALCUL", spectype=test_object_type)
+utest_2 = SPEC_OBJECT(IDENTIFIER="UTEST-FIELD_CALCUL", spectype=test_object_type)
 utest_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col1_attribute, value="Utest_3"))
 utest_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col2_attribute, value="Utest_4"))
 content.add_specobject(utest_2)

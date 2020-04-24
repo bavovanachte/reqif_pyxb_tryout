@@ -18,15 +18,15 @@ from pyxb.binding.datatypes import dateTime
 # REQ_IF_._SetSupersedingClass(REQ_IF_x)
 
 class REQ_IF_CONTENT(raw_reqif.REQ_IF_CONTENT):
-    def __init__(self, *args, **kwargs):
-        super().__init__(
-            SPEC_TYPES = pyxb.BIND(),
-            DATATYPES=pyxb.BIND(),
-            SPEC_OBJECTS=pyxb.BIND(),
-            SPEC_RELATIONS=pyxb.BIND(),
-            SPECIFICATIONS=pyxb.BIND(),
-            SPEC_RELATION_GROUPS=pyxb.BIND()
-        )
+    def __init__(self, *args, **kw):
+        super().__init__(*args, **kw)
+        if not self.SPEC_TYPES: self.SPEC_TYPES= pyxb.BIND()
+        if not self.DATATYPES: self.DATATYPES=pyxb.BIND()
+        if not self.SPEC_OBJECTS: self.SPEC_OBJECTS=pyxb.BIND()
+        if not self.SPEC_RELATIONS: self.SPEC_RELATIONS=pyxb.BIND()
+        if not self.SPECIFICATIONS: self.SPECIFICATIONS=pyxb.BIND()
+        if not self.SPEC_RELATION_GROUPS: self.SPEC_RELATION_GROUPS=pyxb.BIND()
+
     def add_datatype(self, datatype):
         self.DATATYPES.append(datatype)
     def add_spectype(self, spectype):
@@ -71,17 +71,21 @@ class SPEC_OBJECT(raw_reqif.SPEC_OBJECT):
         long_name (str): The more descriptive name of the spec object.
             If none is passed, this value is set to the same value as "identifier"
     '''
-    def __init__(self, identifier, spectype, long_name=""):
-        if isinstance(spectype, str):
-            spectype_local = spectype
-        else:
-            spectype_local = str(spectype.IDENTIFIER)
-        super().__init__(
-            IDENTIFIER=identifier,
-            LAST_CHANGE=dateTime.today(),
-            TYPE=spectype_local,
-            VALUES=pyxb.BIND(),
-            LONG_NAME=long_name if long_name else identifier,)
+    def __init__ (self, *args, **kw):
+        super().__init__(*args, **kw)
+        try:
+            spectype = kw.pop('spectype')
+            if isinstance(spectype, str):
+                spectype_local = spectype
+            else:
+                spectype_local = str(spectype.IDENTIFIER)
+            self.TYPE=spectype_local
+        except KeyError:
+            pass
+        if self.LAST_CHANGE == None:
+            self.LAST_CHANGE = dateTime.today()
+        if self.VALUES == None:
+            self.VALUES = pyxb.BIND()
 
 raw_reqif.SPEC_OBJECT._SetSupersedingClass(SPEC_OBJECT)
 
