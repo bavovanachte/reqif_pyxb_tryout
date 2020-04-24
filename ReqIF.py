@@ -72,16 +72,18 @@ class SPEC_OBJECT(raw_reqif.SPEC_OBJECT):
             If none is passed, this value is set to the same value as "identifier"
     '''
     def __init__ (self, *args, **kw):
-        super().__init__(*args, **kw)
         try:
             spectype = kw.pop('spectype')
             if isinstance(spectype, str):
                 spectype_local = spectype
             else:
                 spectype_local = str(spectype.IDENTIFIER)
-            self.TYPE=spectype_local
         except KeyError:
+            spectype_local = None
             pass
+        super().__init__(*args, **kw)
+        if spectype_local:
+            self.TYPE=spectype_local
         if self.LAST_CHANGE == None:
             self.LAST_CHANGE = dateTime.today()
         if self.VALUES == None:
@@ -102,17 +104,23 @@ class SPECIFICATION(raw_reqif.SPECIFICATION):
         long_name (str): The more descriptive name of the spec object.
             If none is passed, this value is set to the same value as "identifier"
     '''
-    def __init__(self, identifier, spectype, long_name=""):
-        if isinstance(spectype, str):
-            spectype_local = spectype
-        else:
-            spectype_local = str(spectype.IDENTIFIER)
-        super().__init__(
-            IDENTIFIER=identifier,
-            LAST_CHANGE=dateTime.today(),
-            TYPE=spectype_local,
-            LONG_NAME=long_name if long_name else identifier,
-            CHILDREN=pyxb.BIND())
+    def __init__ (self, *args, **kw):
+        try:
+            spectype = kw.pop('spectype')
+            if isinstance(spectype, str):
+                spectype_local = spectype
+            else:
+                spectype_local = str(spectype.IDENTIFIER)
+        except KeyError:
+            spectype_local = None
+            pass
+        super().__init__(*args, **kw)
+        if spectype_local:
+            self.TYPE=spectype_local
+        if self.LAST_CHANGE == None:
+            self.LAST_CHANGE = dateTime.today()
+        if self.CHILDREN == None:
+            self.CHILDREN = pyxb.BIND()
 
     def add_spec_hierarchy(self, spec_hierarchy):
         self.CHILDREN.append(spec_hierarchy)

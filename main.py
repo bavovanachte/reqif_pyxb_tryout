@@ -65,12 +65,12 @@ utest_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col2_attribute, value="Ut
 content.add_specobject(utest_2)
 
 
-spec = SPECIFICATION(identifier="SW_SPEC", spectype=specification_type, long_name="SW specification")
+spec = SPECIFICATION(IDENTIFIER="SW_SPEC", spectype=specification_type, LONG_NAME="SW specification")
 spec.add_spec_hierarchy(SPEC_HIERARCHY(identifier="RANDOM_ID1", spec_object=requirement_1))
 spec.add_spec_hierarchy(SPEC_HIERARCHY(identifier="RANDOM_ID2", spec_object=requirement_2))
 content.add_specification(spec)
 
-utp = SPECIFICATION(identifier="SW_UTP", spectype=specification_type, long_name="SW Unit test plan")
+utp = SPECIFICATION(IDENTIFIER="SW_UTP", spectype=specification_type, LONG_NAME="SW Unit test plan")
 utp.add_spec_hierarchy(SPEC_HIERARCHY(identifier="RANDOM_ID3", spec_object=utest_1))
 utp.add_spec_hierarchy(SPEC_HIERARCHY(identifier="RANDOM_ID4", spec_object=utest_2))
 content.add_specification(utp)
