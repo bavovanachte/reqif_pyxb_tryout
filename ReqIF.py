@@ -61,16 +61,6 @@ class REQ_IF_HEADER(raw_reqif.REQ_IF_HEADER):
 raw_reqif.REQ_IF_HEADER._SetSupersedingClass(REQ_IF_HEADER)
 
 class SPEC_OBJECT(raw_reqif.SPEC_OBJECT):
-    '''
-    Args:
-        identifier (str): The unique identifier
-        spectype (SPEC_OBJECT_TYPE or str): The specification type.
-            This can be either:
-            - An instance of a SPEC_OBJECT_TYPE. In that case, the ID gets extracted.
-            - The ID of the SPEC_OBJECT_TYPE in question
-        long_name (str): The more descriptive name of the spec object.
-            If none is passed, this value is set to the same value as "identifier"
-    '''
     def __init__ (self, *args, **kw):
         try:
             spectype = kw.pop('spectype')
@@ -94,16 +84,6 @@ raw_reqif.SPEC_OBJECT._SetSupersedingClass(SPEC_OBJECT)
 
 
 class SPECIFICATION(raw_reqif.SPECIFICATION):
-    '''
-    Args:
-        identifier (str): The unique identifier
-        spectype (SPEC_OBJECT_TYPE or str): The specification type.
-            This can be either:
-            - An instance of a SPEC_OBJECT_TYPE. In that case, the ID gets extracted.
-            - The ID of the SPEC_OBJECT_TYPE in question
-        long_name (str): The more descriptive name of the spec object.
-            If none is passed, this value is set to the same value as "identifier"
-    '''
     def __init__ (self, *args, **kw):
         try:
             spectype = kw.pop('spectype')
@@ -129,10 +109,6 @@ raw_reqif.SPECIFICATION._SetSupersedingClass(SPECIFICATION)
 
 
 class SPEC_HIERARCHY(raw_reqif.SPEC_HIERARCHY):
-    '''
-    Args:
-        spec_object
-    '''
     def __init__ (self, *args, **kw):
         try:
             spec_object = kw.pop('spec_object')
@@ -153,22 +129,6 @@ raw_reqif.SPEC_HIERARCHY._SetSupersedingClass(SPEC_HIERARCHY)
 
 
 class SPEC_RELATION(raw_reqif.SPEC_RELATION):
-    '''
-    Args:
-        identifier (str): The unique identifier
-        source_spec_object (SPEC_OBJECT or str): The specification type.
-            This can be either:
-            - An instance of a SPEC_OBJECT. In that case, the ID gets extracted.
-            - The ID of the SPEC_OBJECT in question
-        target_spec_object (SPEC_OBJECT or str): The specification type.
-            This can be either:
-            - An instance of a SPEC_OBJECT. In that case, the ID gets extracted.
-            - The ID of the SPEC_OBJECT in question
-        link_type (SPEC_RELATION_TYPE or str): The specification type.
-            This can be either:
-            - An instance of a SPEC_RELATION_TYPE. In that case, the ID gets extracted.
-            - The ID of the SPEC_RELATION_TYPE in question
-    '''
     def __init__ (self, *args, **kw):
         try:
             source_spec_object = kw.pop('source_spec_object')
@@ -211,16 +171,6 @@ raw_reqif.SPEC_RELATION._SetSupersedingClass(SPEC_RELATION)
 
 
 class ATTRIBUTE_DEFINITION_XHTML(raw_reqif.ATTRIBUTE_DEFINITION_XHTML):
-    '''
-    Args:
-        identifier (str): The unique identifier. If none is provided, a random one is generated
-        long_name (str): The descriptive name
-        datatype (DATATYPE_DEFINITION_XHTML or str): The specification type.
-            This can be either:
-            - An instance of a DATATYPE_DEFINITION_XHTML. In that case, the ID gets extracted.
-            - The ID of the DATATYPE_DEFINITION_XHTML in question
-    '''
-
     def __init__ (self, *args, **kw):
         try:
             datatype = kw.pop('datatype')
@@ -242,14 +192,6 @@ class ATTRIBUTE_DEFINITION_XHTML(raw_reqif.ATTRIBUTE_DEFINITION_XHTML):
 raw_reqif.ATTRIBUTE_DEFINITION_XHTML._SetSupersedingClass(ATTRIBUTE_DEFINITION_XHTML)
 
 class ATTRIBUTE_VALUE_XHTML(raw_reqif.ATTRIBUTE_VALUE_XHTML):
-    '''
-    Args:
-        definition (ATTRIBUTE_DEFINITION_XHTML or str): The attribute definition file
-            This can be either:
-            - An instance of a ATTRIBUTE_DEFINITION_XHTML. In that case, the ID gets extracted.
-            - The ID of the ATTRIBUTE_DEFINITION_XHTML in question
-        value (str): The value
-    '''
     def __init__ (self, *args, **kw):
         try:
             definition = kw.pop('definition')
