@@ -1,4 +1,4 @@
-from ReqIF import *
+from reqif_pyxb.ReqIF import *
 
 pyxb.RequireValidWhenParsing(False)
 
