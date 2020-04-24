@@ -43,20 +43,22 @@ raw_reqif.REQ_IF_CONTENT._SetSupersedingClass(REQ_IF_CONTENT)
 
 
 class REQ_IF_HEADER(raw_reqif.REQ_IF_HEADER):
-    def __init__(self, identifier):
-        super().__init__(
-            IDENTIFIER = identifier,
-            COMMENT = "",
-            CREATION_TIME = dateTime.today(),
-            REPOSITORY_ID = "",
-            REQ_IF_TOOL_ID = "",
-            REQ_IF_VERSION = "1.0",
-            SOURCE_TOOL_ID = "",
-            TITLE = ""
-        )
+    def __init__ (self, *args, **kw):
+        super().__init__(*args, **kw)
+        if self.CREATION_TIME == None:
+            self.CREATION_TIME = dateTime.today()
+        if self.REQ_IF_VERSION == None:
+            self.REQ_IF_VERSION = "1.0"
+        if self.TITLE == None:
+            self.TITLE = ""
+        if self.REPOSITORY_ID == None:
+            self.REPOSITORY_ID = ""
+        if self.REQ_IF_TOOL_ID == None:
+            self.REQ_IF_TOOL_ID = ""
+        if self.SOURCE_TOOL_ID == None:
+            self.SOURCE_TOOL_ID = ""
+
 raw_reqif.REQ_IF_HEADER._SetSupersedingClass(REQ_IF_HEADER)
-
-
 
 class SPEC_OBJECT(raw_reqif.SPEC_OBJECT):
     '''

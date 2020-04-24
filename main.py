@@ -8,7 +8,7 @@ a = REQ_IF(
     CORE_CONTENT=pyxb.BIND(),
     TOOL_EXTENSIONS=pyxb.BIND(),
 )
-a.THE_HEADER.REQ_IF_HEADER=REQ_IF_HEADER(identifier = "abcd")
+a.THE_HEADER.REQ_IF_HEADER=REQ_IF_HEADER(IDENTIFIER = "abcd")
 
 content = REQ_IF_CONTENT()
 
