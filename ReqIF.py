@@ -257,7 +257,28 @@ class ATTRIBUTE_VALUE_XHTML(raw_reqif.ATTRIBUTE_VALUE_XHTML):
 
 raw_reqif.ATTRIBUTE_VALUE_XHTML._SetSupersedingClass(ATTRIBUTE_VALUE_XHTML)
 
+class SPEC_OBJECT_TYPE(raw_reqif.SPEC_OBJECT_TYPE):
+    def __init__(self, *args, **kw):
+        super().__init__(*args, **kw)
+        if self.LAST_CHANGE == None:
+            self.LAST_CHANGE = dateTime.today()
+        if self.IDENTIFIER == None:
+            self.IDENTIFIER = ('x' + str(uuid.uuid1()))
+        if self.SPEC_ATTRIBUTES == None:
+            self.SPEC_ATTRIBUTES = pyxb.BIND()
+
+    def add_attribute(self, attribute):
+        self.SPEC_ATTRIBUTES.append(attribute)
+
+raw_reqif.SPEC_OBJECT_TYPE._SetSupersedingClass(SPEC_OBJECT_TYPE)
+
+
+
 # Classes not overridden (yet):
+# - RELATION_GROUP
+# - RELATION_GROUP_TYPE
+# - SPEC_RELATION_TYPE
+# - SPECIFICATION_TYPE
 # - LOCAL_REF
 # - GLOBAL_REF
 # - ALTERNATIVE_ID
@@ -282,11 +303,6 @@ raw_reqif.ATTRIBUTE_VALUE_XHTML._SetSupersedingClass(ATTRIBUTE_VALUE_XHTML)
 # - DATATYPE_DEFINITION_XHTML
 # - EMBEDDED_VALUE
 # - ENUM_VALUE
-# - RELATION_GROUP
-# - RELATION_GROUP_TYPE
 # - REQ_IF_
-# - SPEC_OBJECT_TYPE
-# - SPEC_RELATION_TYPE
-# - SPECIFICATION_TYPE
 # - REQ_IF_TOOL_EXTENSION
 # - XHTML_CONTENT

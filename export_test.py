@@ -20,18 +20,14 @@ content.add_datatype(datatype_xhtml)
 # The specification types
 col1_attribute = ATTRIBUTE_DEFINITION_XHTML(LONG_NAME="Text", datatype=datatype_xhtml)
 col2_attribute = ATTRIBUTE_DEFINITION_XHTML(LONG_NAME="Author", datatype=datatype_xhtml)
-requirement_object_type = SPEC_OBJECT_TYPE(
-    IDENTIFIER = "REQUIREMENT_TYPE",
-    LAST_CHANGE = dateTime.today(),
-    LONG_NAME= "Requirement",
-    SPEC_ATTRIBUTES = pyxb.BIND(col1_attribute, col2_attribute)
-)
-test_object_type = SPEC_OBJECT_TYPE(
-    IDENTIFIER = "TEST_TYPE",
-    LAST_CHANGE = dateTime.today(),
-    LONG_NAME= "Test Case",
-    SPEC_ATTRIBUTES = pyxb.BIND(col1_attribute, col2_attribute)
-)
+requirement_object_type = SPEC_OBJECT_TYPE(LONG_NAME= "Requirement")
+requirement_object_type.add_attribute(col1_attribute)
+requirement_object_type.add_attribute(col2_attribute)
+
+test_object_type = SPEC_OBJECT_TYPE(LONG_NAME= "Test Case")
+test_object_type.add_attribute(col1_attribute)
+test_object_type.add_attribute(col2_attribute)
+
 spec_relation_type = SPEC_RELATION_TYPE(IDENTIFIER="_1link_type", LAST_CHANGE=dateTime.today(), LONG_NAME="selflink")
 specification_type = SPECIFICATION_TYPE(IDENTIFIER="_doc_type_ref", LAST_CHANGE=dateTime.today(), LONG_NAME="doc_type")
 
