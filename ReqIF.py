@@ -131,23 +131,23 @@ raw_reqif.SPECIFICATION._SetSupersedingClass(SPECIFICATION)
 class SPEC_HIERARCHY(raw_reqif.SPEC_HIERARCHY):
     '''
     Args:
-        identifier (str): The unique identifier
-        spectype (SPEC_OBJECT_TYPE or str): The specification type.
-            This can be either:
-            - An instance of a SPEC_OBJECT_TYPE. In that case, the ID gets extracted.
-            - The ID of the SPEC_OBJECT_TYPE in question
-        long_name (str): The more descriptive name of the spec object.
-            If none is passed, this value is set to the same value as "identifier"
+        spec_object
     '''
-    def __init__(self, identifier, spec_object):
-        if isinstance(spec_object, str):
-            spec_object_local = spec_object
-        else:
-            spec_object_local = str(spec_object.IDENTIFIER)
-        super().__init__(
-            IDENTIFIER=identifier,
-            LAST_CHANGE=dateTime.today(),
-            OBJECT=spec_object_local)
+    def __init__ (self, *args, **kw):
+        try:
+            spec_object = kw.pop('spec_object')
+            if isinstance(spec_object, str):
+                spec_object_local = spec_object
+            else:
+                spec_object_local = str(spec_object.IDENTIFIER)
+        except KeyError:
+            spec_object_local = None
+            pass
+        super().__init__(*args, **kw)
+        if spec_object_local:
+            self.OBJECT=spec_object_local
+        if self.LAST_CHANGE == None:
+            self.LAST_CHANGE = dateTime.today()
 
 raw_reqif.SPEC_HIERARCHY._SetSupersedingClass(SPEC_HIERARCHY)
 
@@ -169,28 +169,43 @@ class SPEC_RELATION(raw_reqif.SPEC_RELATION):
             - An instance of a SPEC_RELATION_TYPE. In that case, the ID gets extracted.
             - The ID of the SPEC_RELATION_TYPE in question
     '''
-    def __init__(self, identifier, source_spec_object, target_spec_object, link_type):
-        if isinstance(source_spec_object, str):
-            source_spec_object_local = source_spec_object
-        else:
-            source_spec_object_local = str(source_spec_object.IDENTIFIER)
-
-        if isinstance(source_spec_object, str):
-            target_spec_object_local = target_spec_object
-        else:
-            target_spec_object_local = str(target_spec_object.IDENTIFIER)
-
-        if isinstance(source_spec_object, str):
-            link_type_local = link_type
-        else:
-            link_type_local = str(link_type.IDENTIFIER)
-
-        super().__init__(
-            IDENTIFIER=identifier,
-            LAST_CHANGE=dateTime.today(),
-            SOURCE=source_spec_object_local,
-            TARGET=target_spec_object_local,
-            TYPE=link_type_local)
+    def __init__ (self, *args, **kw):
+        try:
+            source_spec_object = kw.pop('source_spec_object')
+            if isinstance(source_spec_object, str):
+                source_spec_object_local = source_spec_object
+            else:
+                source_spec_object_local = str(source_spec_object.IDENTIFIER)
+        except KeyError:
+            source_spec_object_local = None
+            pass
+        try:
+            target_spec_object = kw.pop('target_spec_object')
+            if isinstance(target_spec_object, str):
+                target_spec_object_local = target_spec_object
+            else:
+                target_spec_object_local = str(target_spec_object.IDENTIFIER)
+        except KeyError:
+            target_spec_object_local = None
+            pass
+        try:
+            link_type = kw.pop('link_type')
+            if isinstance(link_type, str):
+                link_type_local = link_type
+            else:
+                link_type_local = str(link_type.IDENTIFIER)
+        except KeyError:
+            link_type_local = None
+            pass
+        super().__init__(*args, **kw)
+        if source_spec_object_local:
+            self.SOURCE=source_spec_object_local
+        if target_spec_object_local:
+            self.TARGET=target_spec_object_local
+        if link_type_local:
+            self.TYPE=link_type_local
+        if self.LAST_CHANGE == None:
+            self.LAST_CHANGE = dateTime.today()
 
 raw_reqif.SPEC_RELATION._SetSupersedingClass(SPEC_RELATION)
 
@@ -205,17 +220,24 @@ class ATTRIBUTE_DEFINITION_XHTML(raw_reqif.ATTRIBUTE_DEFINITION_XHTML):
             - An instance of a DATATYPE_DEFINITION_XHTML. In that case, the ID gets extracted.
             - The ID of the DATATYPE_DEFINITION_XHTML in question
     '''
-    def __init__(self, long_name, datatype, identifier=('x' + str(uuid.uuid1()))):
-        if isinstance(datatype, str):
-            datatype_local = datatype
-        else:
-            datatype_local = str(datatype.IDENTIFIER)
 
-        super().__init__(
-            IDENTIFIER=identifier,
-            LAST_CHANGE=dateTime.today(),
-            LONG_NAME= long_name,
-            TYPE=datatype_local)
+    def __init__ (self, *args, **kw):
+        try:
+            datatype = kw.pop('datatype')
+            if isinstance(datatype, str):
+                datatype_local = datatype
+            else:
+                datatype_local = str(datatype.IDENTIFIER)
+        except KeyError:
+            datatype_local = None
+            pass
+        super().__init__(*args, **kw)
+        if datatype_local:
+            self.TYPE=datatype_local
+        if self.LAST_CHANGE == None:
+            self.LAST_CHANGE = dateTime.today()
+        if self.IDENTIFIER == None:
+            self.IDENTIFIER = ('x' + str(uuid.uuid1()))
 
 raw_reqif.ATTRIBUTE_DEFINITION_XHTML._SetSupersedingClass(ATTRIBUTE_DEFINITION_XHTML)
 
@@ -228,6 +250,31 @@ class ATTRIBUTE_VALUE_XHTML(raw_reqif.ATTRIBUTE_VALUE_XHTML):
             - The ID of the ATTRIBUTE_DEFINITION_XHTML in question
         value (str): The value
     '''
+    def __init__ (self, *args, **kw):
+        try:
+            definition = kw.pop('definition')
+            if isinstance(definition, str):
+                definition_local = definition
+            else:
+                definition_local = str(definition.IDENTIFIER)
+        except KeyError:
+            definition_local = None
+            pass
+        try:
+            value_local = kw.pop('value')
+        except KeyError:
+            value_local = None
+            pass
+        super().__init__(*args, **kw)
+        if definition_local:
+            self.DEFINITION=definition_local
+        if value_local:
+            self.THE_VALUE=pyxb.BIND(div=value)
+        else:
+            self.THE_VALUE=pyxb.BIND()
+
+
+
     def __init__(self, definition, value):
         if isinstance(definition, str):
             definition_local = definition

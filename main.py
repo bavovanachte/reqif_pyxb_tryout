@@ -18,8 +18,8 @@ datatype_xhtml = DATATYPE_DEFINITION_XHTML(IDENTIFIER=gen_id, LAST_CHANGE=dateTi
 content.add_datatype(datatype_xhtml)
 
 # The specification types
-col1_attribute = ATTRIBUTE_DEFINITION_XHTML(long_name="Text", datatype=datatype_xhtml)
-col2_attribute = ATTRIBUTE_DEFINITION_XHTML(long_name="Author", datatype=datatype_xhtml)
+col1_attribute = ATTRIBUTE_DEFINITION_XHTML(LONG_NAME="Text", datatype=datatype_xhtml)
+col2_attribute = ATTRIBUTE_DEFINITION_XHTML(LONG_NAME="Author", datatype=datatype_xhtml)
 requirement_object_type = SPEC_OBJECT_TYPE(
     IDENTIFIER = "REQUIREMENT_TYPE",
     LAST_CHANGE = dateTime.today(),
@@ -66,27 +66,27 @@ content.add_specobject(utest_2)
 
 
 spec = SPECIFICATION(IDENTIFIER="SW_SPEC", spectype=specification_type, LONG_NAME="SW specification")
-spec.add_spec_hierarchy(SPEC_HIERARCHY(identifier="RANDOM_ID1", spec_object=requirement_1))
-spec.add_spec_hierarchy(SPEC_HIERARCHY(identifier="RANDOM_ID2", spec_object=requirement_2))
+spec.add_spec_hierarchy(SPEC_HIERARCHY(IDENTIFIER="RANDOM_ID1", spec_object=requirement_1))
+spec.add_spec_hierarchy(SPEC_HIERARCHY(IDENTIFIER="RANDOM_ID2", spec_object=requirement_2))
 content.add_specification(spec)
 
 utp = SPECIFICATION(IDENTIFIER="SW_UTP", spectype=specification_type, LONG_NAME="SW Unit test plan")
-utp.add_spec_hierarchy(SPEC_HIERARCHY(identifier="RANDOM_ID3", spec_object=utest_1))
-utp.add_spec_hierarchy(SPEC_HIERARCHY(identifier="RANDOM_ID4", spec_object=utest_2))
+utp.add_spec_hierarchy(SPEC_HIERARCHY(IDENTIFIER="RANDOM_ID3", spec_object=utest_1))
+utp.add_spec_hierarchy(SPEC_HIERARCHY(IDENTIFIER="RANDOM_ID4", spec_object=utest_2))
 content.add_specification(utp)
 
 
 # Relationships between requirements
 content.add_spec_relation(
     SPEC_RELATION(
-        identifier="_self_link",
+        IDENTIFIER="_self_link",
         source_spec_object=requirement_1,
         target_spec_object=requirement_2,
         link_type=spec_relation_type))
 
 content.add_spec_relation(
     SPEC_RELATION(
-        identifier="_self_link",
+        IDENTIFIER="_self_link",
         source_spec_object=utest_1,
         target_spec_object=utest_2,
         link_type=spec_relation_type))
