@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "reqif_pyxb"
+version = "0.1.0"
+description = "Python library for managing reqif xml files based on pyxb"
+authors = ["Bavo Van Achte <bavo.van.achte@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+pyxb = "^1.2.6"
+
+[tool.poetry.dev-dependencies]
+nose = "^1.3.7"
+tox = "^3.14.6"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

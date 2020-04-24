@@ -1,0 +1,6 @@
+reqif_pyxb/dist/*
+*egg-info*
+.python-version
+poetry.lock
+__pycache__
+dist/*
