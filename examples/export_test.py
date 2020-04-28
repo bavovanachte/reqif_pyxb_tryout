@@ -8,7 +8,7 @@ a = REQ_IF(
     CORE_CONTENT=pyxb.BIND(),
     TOOL_EXTENSIONS=pyxb.BIND(),
 )
-a.THE_HEADER.REQ_IF_HEADER=REQ_IF_HEADER(IDENTIFIER = "abcd")
+a.THE_HEADER.REQ_IF_HEADER=REQ_IF_HEADER()
 
 content = REQ_IF_CONTENT()
 
@@ -28,8 +28,8 @@ test_object_type = SPEC_OBJECT_TYPE(LONG_NAME= "Test Case")
 test_object_type.add_attribute(col1_attribute)
 test_object_type.add_attribute(col2_attribute)
 
-spec_relation_type = SPEC_RELATION_TYPE(IDENTIFIER="_1link_type", LAST_CHANGE=dateTime.today(), LONG_NAME="selflink")
-specification_type = SPECIFICATION_TYPE(IDENTIFIER="_doc_type_ref", LAST_CHANGE=dateTime.today(), LONG_NAME="doc_type")
+spec_relation_type = SPEC_RELATION_TYPE(LONG_NAME="selflink")
+specification_type = SPECIFICATION_TYPE(LONG_NAME="doc_type")
 
 # a.CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES = pyxb.BIND()
 content.add_spectype(requirement_object_type)
@@ -61,28 +61,26 @@ utest_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=col2_attribute, value="Ut
 content.add_specobject(utest_2)
 
 
-spec = SPECIFICATION(IDENTIFIER="SW_SPEC", spectype=specification_type, LONG_NAME="SW specification")
-spec.add_spec_hierarchy(SPEC_HIERARCHY(IDENTIFIER="RANDOM_ID1", spec_object=requirement_1))
-spec.add_spec_hierarchy(SPEC_HIERARCHY(IDENTIFIER="RANDOM_ID2", spec_object=requirement_2))
+spec = SPECIFICATION(spectype=specification_type, LONG_NAME="SW specification")
+spec.add_spec_hierarchy(SPEC_HIERARCHY(spec_object=requirement_1))
+spec.add_spec_hierarchy(SPEC_HIERARCHY(spec_object=requirement_2))
 content.add_specification(spec)
 
-utp = SPECIFICATION(IDENTIFIER="SW_UTP", spectype=specification_type, LONG_NAME="SW Unit test plan")
-utp.add_spec_hierarchy(SPEC_HIERARCHY(IDENTIFIER="RANDOM_ID3", spec_object=utest_1))
-utp.add_spec_hierarchy(SPEC_HIERARCHY(IDENTIFIER="RANDOM_ID4", spec_object=utest_2))
+utp = SPECIFICATION(spectype=specification_type, LONG_NAME="SW Unit test plan")
+utp.add_spec_hierarchy(SPEC_HIERARCHY(spec_object=utest_1))
+utp.add_spec_hierarchy(SPEC_HIERARCHY(spec_object=utest_2))
 content.add_specification(utp)
 
 
 # Relationships between requirements
 content.add_spec_relation(
     SPEC_RELATION(
-        IDENTIFIER="_self_link",
         source_spec_object=requirement_1,
         target_spec_object=requirement_2,
         link_type=spec_relation_type))
 
 content.add_spec_relation(
     SPEC_RELATION(
-        IDENTIFIER="_self_link",
         source_spec_object=utest_1,
         target_spec_object=utest_2,
         link_type=spec_relation_type))

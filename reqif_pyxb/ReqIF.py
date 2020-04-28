@@ -36,6 +36,9 @@ import uuid
 from pyxb.binding.datatypes import dateTime
 
 
+def generate_unique_id():
+    return ('x' + str(uuid.uuid1()))
+
 # class REQ_IF_x(REQ_IF_):
 #     def __init__(self):
 #         super().__init__(
@@ -74,18 +77,13 @@ raw_reqif.REQ_IF_CONTENT._SetSupersedingClass(REQ_IF_CONTENT)
 class REQ_IF_HEADER(raw_reqif.REQ_IF_HEADER):
     def __init__ (self, *args, **kw):
         super().__init__(*args, **kw)
-        if self.CREATION_TIME == None:
-            self.CREATION_TIME = dateTime.today()
-        if self.REQ_IF_VERSION == None:
-            self.REQ_IF_VERSION = "1.0"
-        if self.TITLE == None:
-            self.TITLE = ""
-        if self.REPOSITORY_ID == None:
-            self.REPOSITORY_ID = ""
-        if self.REQ_IF_TOOL_ID == None:
-            self.REQ_IF_TOOL_ID = ""
-        if self.SOURCE_TOOL_ID == None:
-            self.SOURCE_TOOL_ID = ""
+        if not self.CREATION_TIME: self.CREATION_TIME = dateTime.today()
+        if not self.REQ_IF_VERSION: self.REQ_IF_VERSION = "1.0"
+        if not self.TITLE: self.TITLE = ""
+        if not self.REPOSITORY_ID: self.REPOSITORY_ID = ""
+        if not self.REQ_IF_TOOL_ID: self.REQ_IF_TOOL_ID = ""
+        if not self.SOURCE_TOOL_ID: self.SOURCE_TOOL_ID = ""
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
 
 raw_reqif.REQ_IF_HEADER._SetSupersedingClass(REQ_IF_HEADER)
 
@@ -101,15 +99,11 @@ class SPEC_OBJECT(raw_reqif.SPEC_OBJECT):
             spectype_local = None
             pass
         super().__init__(*args, **kw)
-        if spectype_local:
-            self.TYPE=spectype_local
-        if self.LAST_CHANGE == None:
-            self.LAST_CHANGE = dateTime.today()
-        if self.VALUES == None:
-            self.VALUES = pyxb.BIND()
+        if spectype_local: self.TYPE=spectype_local
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.VALUES: self.VALUES = pyxb.BIND()
 
 raw_reqif.SPEC_OBJECT._SetSupersedingClass(SPEC_OBJECT)
-
 
 
 class SPECIFICATION(raw_reqif.SPECIFICATION):
@@ -124,12 +118,10 @@ class SPECIFICATION(raw_reqif.SPECIFICATION):
             spectype_local = None
             pass
         super().__init__(*args, **kw)
-        if spectype_local:
-            self.TYPE=spectype_local
-        if self.LAST_CHANGE == None:
-            self.LAST_CHANGE = dateTime.today()
-        if self.CHILDREN == None:
-            self.CHILDREN = pyxb.BIND()
+        if spectype_local: self.TYPE=spectype_local
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
+        if not self.CHILDREN: self.CHILDREN = pyxb.BIND()
 
     def add_spec_hierarchy(self, spec_hierarchy):
         self.CHILDREN.append(spec_hierarchy)
@@ -149,10 +141,9 @@ class SPEC_HIERARCHY(raw_reqif.SPEC_HIERARCHY):
             spec_object_local = None
             pass
         super().__init__(*args, **kw)
-        if spec_object_local:
-            self.OBJECT=spec_object_local
-        if self.LAST_CHANGE == None:
-            self.LAST_CHANGE = dateTime.today()
+        if spec_object_local: self.OBJECT=spec_object_local
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
 
 raw_reqif.SPEC_HIERARCHY._SetSupersedingClass(SPEC_HIERARCHY)
 
@@ -187,14 +178,11 @@ class SPEC_RELATION(raw_reqif.SPEC_RELATION):
             link_type_local = None
             pass
         super().__init__(*args, **kw)
-        if source_spec_object_local:
-            self.SOURCE=source_spec_object_local
-        if target_spec_object_local:
-            self.TARGET=target_spec_object_local
-        if link_type_local:
-            self.TYPE=link_type_local
-        if self.LAST_CHANGE == None:
-            self.LAST_CHANGE = dateTime.today()
+        if source_spec_object_local: self.SOURCE=source_spec_object_local
+        if target_spec_object_local: self.TARGET=target_spec_object_local
+        if link_type_local: self.TYPE=link_type_local
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
 
 raw_reqif.SPEC_RELATION._SetSupersedingClass(SPEC_RELATION)
 
@@ -211,12 +199,9 @@ class ATTRIBUTE_DEFINITION_XHTML(raw_reqif.ATTRIBUTE_DEFINITION_XHTML):
             datatype_local = None
             pass
         super().__init__(*args, **kw)
-        if datatype_local:
-            self.TYPE=datatype_local
-        if self.LAST_CHANGE == None:
-            self.LAST_CHANGE = dateTime.today()
-        if self.IDENTIFIER == None:
-            self.IDENTIFIER = ('x' + str(uuid.uuid1()))
+        if datatype_local: self.TYPE=datatype_local
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
 
 raw_reqif.ATTRIBUTE_DEFINITION_XHTML._SetSupersedingClass(ATTRIBUTE_DEFINITION_XHTML)
 
@@ -237,35 +222,20 @@ class ATTRIBUTE_VALUE_XHTML(raw_reqif.ATTRIBUTE_VALUE_XHTML):
             value_local = None
             pass
         super().__init__(*args, **kw)
-        if definition_local:
-            self.DEFINITION=definition_local
+        if definition_local: self.DEFINITION=definition_local
         if value_local:
-            self.THE_VALUE=pyxb.BIND(div=value)
+            self.THE_VALUE=pyxb.BIND(div=value_local)
         else:
             self.THE_VALUE=pyxb.BIND()
-
-
-
-    def __init__(self, definition, value):
-        if isinstance(definition, str):
-            definition_local = definition
-        else:
-            definition_local = str(definition.IDENTIFIER)
-        super().__init__(
-            DEFINITION=definition_local,
-            THE_VALUE=pyxb.BIND(div=value))
 
 raw_reqif.ATTRIBUTE_VALUE_XHTML._SetSupersedingClass(ATTRIBUTE_VALUE_XHTML)
 
 class SPEC_OBJECT_TYPE(raw_reqif.SPEC_OBJECT_TYPE):
     def __init__(self, *args, **kw):
         super().__init__(*args, **kw)
-        if self.LAST_CHANGE == None:
-            self.LAST_CHANGE = dateTime.today()
-        if self.IDENTIFIER == None:
-            self.IDENTIFIER = ('x' + str(uuid.uuid1()))
-        if self.SPEC_ATTRIBUTES == None:
-            self.SPEC_ATTRIBUTES = pyxb.BIND()
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
+        if not self.SPEC_ATTRIBUTES: self.SPEC_ATTRIBUTES = pyxb.BIND()
 
     def add_attribute(self, attribute):
         self.SPEC_ATTRIBUTES.append(attribute)
@@ -273,12 +243,25 @@ class SPEC_OBJECT_TYPE(raw_reqif.SPEC_OBJECT_TYPE):
 raw_reqif.SPEC_OBJECT_TYPE._SetSupersedingClass(SPEC_OBJECT_TYPE)
 
 
+class SPEC_RELATION_TYPE(raw_reqif.SPEC_RELATION_TYPE):
+    def __init__ (self, *args, **kw):
+        super().__init__(*args, **kw)
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
+
+raw_reqif.SPEC_RELATION_TYPE._SetSupersedingClass(SPEC_RELATION_TYPE)
+
+class SPECIFICATION_TYPE(raw_reqif.SPECIFICATION_TYPE):
+    def __init__ (self, *args, **kw):
+        super().__init__(*args, **kw)
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
+
+raw_reqif.SPECIFICATION_TYPE._SetSupersedingClass(SPECIFICATION_TYPE)
 
 # Classes not overridden (yet):
 # - RELATION_GROUP
 # - RELATION_GROUP_TYPE
-# - SPEC_RELATION_TYPE
-# - SPECIFICATION_TYPE
 # - LOCAL_REF
 # - GLOBAL_REF
 # - ALTERNATIVE_ID
