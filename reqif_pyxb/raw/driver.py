@@ -27,7 +27,7 @@ if pyxb.__version__ != _PyXBVersion:
 _module_typeBindings = pyxb.utils.utility.Object()
 
 # Import bindings for namespaces imported into schema
-import _nsgroup
+from . import _nsgroup
 
 # NOTE: All namespace declarations are reserved within the binding
 Namespace = pyxb.namespace.NamespaceForURI('http://www.w3.org/1999/xhtml', create_if_missing=True)
@@ -84,57 +84,57 @@ def CreateFromDOM (node, fallback_namespace=None, default_namespace=None):
         fallback_namespace = Namespace.fallbackNamespace()
     return pyxb.binding.basis.element.AnyCreateFromDOM(node, fallback_namespace)
 
-from _nsgroup import xhtml_br_type # {http://www.w3.org/1999/xhtml}xhtml.br.type
-from _nsgroup import STD_ANON # None
-from _nsgroup import STD_ANON_ # None
-from _nsgroup import STD_ANON_2 # None
-from _nsgroup import STD_ANON_3 # None
-from _nsgroup import STD_ANON_4 # None
-from _nsgroup import STD_ANON_5 # None
-from _nsgroup import STD_ANON_6 # None
-from _nsgroup import xhtml_address_type # {http://www.w3.org/1999/xhtml}xhtml.address.type
-from _nsgroup import xhtml_blockquote_type # {http://www.w3.org/1999/xhtml}xhtml.blockquote.type
-from _nsgroup import xhtml_pre_type # {http://www.w3.org/1999/xhtml}xhtml.pre.type
-from _nsgroup import xhtml_heading_type # {http://www.w3.org/1999/xhtml}xhtml.heading.type
-from _nsgroup import xhtml_h1_type # {http://www.w3.org/1999/xhtml}xhtml.h1.type
-from _nsgroup import xhtml_h2_type # {http://www.w3.org/1999/xhtml}xhtml.h2.type
-from _nsgroup import xhtml_h3_type # {http://www.w3.org/1999/xhtml}xhtml.h3.type
-from _nsgroup import xhtml_h4_type # {http://www.w3.org/1999/xhtml}xhtml.h4.type
-from _nsgroup import xhtml_h5_type # {http://www.w3.org/1999/xhtml}xhtml.h5.type
-from _nsgroup import xhtml_h6_type # {http://www.w3.org/1999/xhtml}xhtml.h6.type
-from _nsgroup import xhtml_hr_type # {http://www.w3.org/1999/xhtml}xhtml.hr.type
-from _nsgroup import xhtml_div_type # {http://www.w3.org/1999/xhtml}xhtml.div.type
-from _nsgroup import xhtml_p_type # {http://www.w3.org/1999/xhtml}xhtml.p.type
-from _nsgroup import xhtml_edit_type # {http://www.w3.org/1999/xhtml}xhtml.edit.type
-from _nsgroup import xhtml_a_type # {http://www.w3.org/1999/xhtml}xhtml.a.type
-from _nsgroup import xhtml_abbr_type # {http://www.w3.org/1999/xhtml}xhtml.abbr.type
-from _nsgroup import xhtml_acronym_type # {http://www.w3.org/1999/xhtml}xhtml.acronym.type
-from _nsgroup import xhtml_cite_type # {http://www.w3.org/1999/xhtml}xhtml.cite.type
-from _nsgroup import xhtml_code_type # {http://www.w3.org/1999/xhtml}xhtml.code.type
-from _nsgroup import xhtml_dfn_type # {http://www.w3.org/1999/xhtml}xhtml.dfn.type
-from _nsgroup import xhtml_em_type # {http://www.w3.org/1999/xhtml}xhtml.em.type
-from _nsgroup import xhtml_kbd_type # {http://www.w3.org/1999/xhtml}xhtml.kbd.type
-from _nsgroup import xhtml_samp_type # {http://www.w3.org/1999/xhtml}xhtml.samp.type
-from _nsgroup import xhtml_strong_type # {http://www.w3.org/1999/xhtml}xhtml.strong.type
-from _nsgroup import xhtml_var_type # {http://www.w3.org/1999/xhtml}xhtml.var.type
-from _nsgroup import xhtml_q_type # {http://www.w3.org/1999/xhtml}xhtml.q.type
-from _nsgroup import xhtml_InlPres_type # {http://www.w3.org/1999/xhtml}xhtml.InlPres.type
-from _nsgroup import xhtml_span_type # {http://www.w3.org/1999/xhtml}xhtml.span.type
-from _nsgroup import xhtml_dt_type # {http://www.w3.org/1999/xhtml}xhtml.dt.type
-from _nsgroup import xhtml_dd_type # {http://www.w3.org/1999/xhtml}xhtml.dd.type
-from _nsgroup import xhtml_dl_type # {http://www.w3.org/1999/xhtml}xhtml.dl.type
-from _nsgroup import xhtml_li_type # {http://www.w3.org/1999/xhtml}xhtml.li.type
-from _nsgroup import xhtml_ol_type # {http://www.w3.org/1999/xhtml}xhtml.ol.type
-from _nsgroup import xhtml_ul_type # {http://www.w3.org/1999/xhtml}xhtml.ul.type
-from _nsgroup import xhtml_param_type # {http://www.w3.org/1999/xhtml}xhtml.param.type
-from _nsgroup import xhtml_caption_type # {http://www.w3.org/1999/xhtml}xhtml.caption.type
-from _nsgroup import xhtml_object_type # {http://www.w3.org/1999/xhtml}xhtml.object.type
-from _nsgroup import xhtml_td_type # {http://www.w3.org/1999/xhtml}xhtml.td.type
-from _nsgroup import xhtml_th_type # {http://www.w3.org/1999/xhtml}xhtml.th.type
-from _nsgroup import xhtml_tr_type # {http://www.w3.org/1999/xhtml}xhtml.tr.type
-from _nsgroup import xhtml_col_type # {http://www.w3.org/1999/xhtml}xhtml.col.type
-from _nsgroup import xhtml_colgroup_type # {http://www.w3.org/1999/xhtml}xhtml.colgroup.type
-from _nsgroup import xhtml_tbody_type # {http://www.w3.org/1999/xhtml}xhtml.tbody.type
-from _nsgroup import xhtml_tfoot_type # {http://www.w3.org/1999/xhtml}xhtml.tfoot.type
-from _nsgroup import xhtml_thead_type # {http://www.w3.org/1999/xhtml}xhtml.thead.type
-from _nsgroup import xhtml_table_type # {http://www.w3.org/1999/xhtml}xhtml.table.type
+from ._nsgroup import xhtml_br_type # {http://www.w3.org/1999/xhtml}xhtml.br.type
+from ._nsgroup import STD_ANON # None
+from ._nsgroup import STD_ANON_ # None
+from ._nsgroup import STD_ANON_2 # None
+from ._nsgroup import STD_ANON_3 # None
+from ._nsgroup import STD_ANON_4 # None
+from ._nsgroup import STD_ANON_5 # None
+from ._nsgroup import STD_ANON_6 # None
+from ._nsgroup import xhtml_address_type # {http://www.w3.org/1999/xhtml}xhtml.address.type
+from ._nsgroup import xhtml_blockquote_type # {http://www.w3.org/1999/xhtml}xhtml.blockquote.type
+from ._nsgroup import xhtml_pre_type # {http://www.w3.org/1999/xhtml}xhtml.pre.type
+from ._nsgroup import xhtml_heading_type # {http://www.w3.org/1999/xhtml}xhtml.heading.type
+from ._nsgroup import xhtml_h1_type # {http://www.w3.org/1999/xhtml}xhtml.h1.type
+from ._nsgroup import xhtml_h2_type # {http://www.w3.org/1999/xhtml}xhtml.h2.type
+from ._nsgroup import xhtml_h3_type # {http://www.w3.org/1999/xhtml}xhtml.h3.type
+from ._nsgroup import xhtml_h4_type # {http://www.w3.org/1999/xhtml}xhtml.h4.type
+from ._nsgroup import xhtml_h5_type # {http://www.w3.org/1999/xhtml}xhtml.h5.type
+from ._nsgroup import xhtml_h6_type # {http://www.w3.org/1999/xhtml}xhtml.h6.type
+from ._nsgroup import xhtml_hr_type # {http://www.w3.org/1999/xhtml}xhtml.hr.type
+from ._nsgroup import xhtml_div_type # {http://www.w3.org/1999/xhtml}xhtml.div.type
+from ._nsgroup import xhtml_p_type # {http://www.w3.org/1999/xhtml}xhtml.p.type
+from ._nsgroup import xhtml_edit_type # {http://www.w3.org/1999/xhtml}xhtml.edit.type
+from ._nsgroup import xhtml_a_type # {http://www.w3.org/1999/xhtml}xhtml.a.type
+from ._nsgroup import xhtml_abbr_type # {http://www.w3.org/1999/xhtml}xhtml.abbr.type
+from ._nsgroup import xhtml_acronym_type # {http://www.w3.org/1999/xhtml}xhtml.acronym.type
+from ._nsgroup import xhtml_cite_type # {http://www.w3.org/1999/xhtml}xhtml.cite.type
+from ._nsgroup import xhtml_code_type # {http://www.w3.org/1999/xhtml}xhtml.code.type
+from ._nsgroup import xhtml_dfn_type # {http://www.w3.org/1999/xhtml}xhtml.dfn.type
+from ._nsgroup import xhtml_em_type # {http://www.w3.org/1999/xhtml}xhtml.em.type
+from ._nsgroup import xhtml_kbd_type # {http://www.w3.org/1999/xhtml}xhtml.kbd.type
+from ._nsgroup import xhtml_samp_type # {http://www.w3.org/1999/xhtml}xhtml.samp.type
+from ._nsgroup import xhtml_strong_type # {http://www.w3.org/1999/xhtml}xhtml.strong.type
+from ._nsgroup import xhtml_var_type # {http://www.w3.org/1999/xhtml}xhtml.var.type
+from ._nsgroup import xhtml_q_type # {http://www.w3.org/1999/xhtml}xhtml.q.type
+from ._nsgroup import xhtml_InlPres_type # {http://www.w3.org/1999/xhtml}xhtml.InlPres.type
+from ._nsgroup import xhtml_span_type # {http://www.w3.org/1999/xhtml}xhtml.span.type
+from ._nsgroup import xhtml_dt_type # {http://www.w3.org/1999/xhtml}xhtml.dt.type
+from ._nsgroup import xhtml_dd_type # {http://www.w3.org/1999/xhtml}xhtml.dd.type
+from ._nsgroup import xhtml_dl_type # {http://www.w3.org/1999/xhtml}xhtml.dl.type
+from ._nsgroup import xhtml_li_type # {http://www.w3.org/1999/xhtml}xhtml.li.type
+from ._nsgroup import xhtml_ol_type # {http://www.w3.org/1999/xhtml}xhtml.ol.type
+from ._nsgroup import xhtml_ul_type # {http://www.w3.org/1999/xhtml}xhtml.ul.type
+from ._nsgroup import xhtml_param_type # {http://www.w3.org/1999/xhtml}xhtml.param.type
+from ._nsgroup import xhtml_caption_type # {http://www.w3.org/1999/xhtml}xhtml.caption.type
+from ._nsgroup import xhtml_object_type # {http://www.w3.org/1999/xhtml}xhtml.object.type
+from ._nsgroup import xhtml_td_type # {http://www.w3.org/1999/xhtml}xhtml.td.type
+from ._nsgroup import xhtml_th_type # {http://www.w3.org/1999/xhtml}xhtml.th.type
+from ._nsgroup import xhtml_tr_type # {http://www.w3.org/1999/xhtml}xhtml.tr.type
+from ._nsgroup import xhtml_col_type # {http://www.w3.org/1999/xhtml}xhtml.col.type
+from ._nsgroup import xhtml_colgroup_type # {http://www.w3.org/1999/xhtml}xhtml.colgroup.type
+from ._nsgroup import xhtml_tbody_type # {http://www.w3.org/1999/xhtml}xhtml.tbody.type
+from ._nsgroup import xhtml_tfoot_type # {http://www.w3.org/1999/xhtml}xhtml.tfoot.type
+from ._nsgroup import xhtml_thead_type # {http://www.w3.org/1999/xhtml}xhtml.thead.type
+from ._nsgroup import xhtml_table_type # {http://www.w3.org/1999/xhtml}xhtml.table.type
