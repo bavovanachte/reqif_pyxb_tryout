@@ -31,6 +31,8 @@ datatype_boolean = DATATYPE_DEFINITION_BOOLEAN(LONG_NAME="Boolean")
 content.add_datatype(datatype_boolean)
 datatype_real = DATATYPE_DEFINITION_REAL(LONG_NAME="Real", MIN=0.0, MAX=100.0, ACCURACY=2)
 content.add_datatype(datatype_real)
+datatype_unsigned_integer = DATATYPE_DEFINITION_INTEGER(LONG_NAME="Unsigned int", MIN=0, MAX=65535)
+content.add_datatype(datatype_unsigned_integer)
 
 # The specification types
 text_attribute = ATTRIBUTE_DEFINITION_XHTML(LONG_NAME="Text", datatype=datatype_xhtml)
@@ -39,6 +41,7 @@ max_value_attribute = ATTRIBUTE_DEFINITION_REAL(LONG_NAME="Maximum Value", datat
 author_attribute = ATTRIBUTE_DEFINITION_STRING(LONG_NAME="Author", datatype=datatype_string)
 last_executed_attribute = ATTRIBUTE_DEFINITION_DATE(LONG_NAME="Last executed", datatype=datatype_date)
 approved_attribute = ATTRIBUTE_DEFINITION_BOOLEAN(LONG_NAME="Approved", datatype=datatype_boolean)
+number_of_subtestcases_attribute = ATTRIBUTE_DEFINITION_INTEGER(LONG_NAME="No. of subtestcases", datatype=datatype_unsigned_integer)
 
 requirement_object_type = SPEC_OBJECT_TYPE(LONG_NAME= "Requirement")
 requirement_object_type.add_attribute(text_attribute)
@@ -49,6 +52,7 @@ test_object_type = SPEC_OBJECT_TYPE(LONG_NAME= "Test Case")
 test_object_type.add_attribute(text_attribute)
 test_object_type.add_attribute(author_attribute)
 test_object_type.add_attribute(last_executed_attribute)
+test_object_type.add_attribute(number_of_subtestcases_attribute)
 
 configuration_object_type = SPEC_OBJECT_TYPE(LONG_NAME= "Configuration item")
 configuration_object_type.add_attribute(text_attribute)
@@ -84,12 +88,14 @@ utest_1 = SPEC_OBJECT(IDENTIFIER="UTEST-ANGLE_CALCUL", spectype=test_object_type
 utest_1.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=text_attribute, value="The SW shall test the correct functioning of the angle calculation"))
 utest_1.VALUES.append(ATTRIBUTE_VALUE_STRING(definition=author_attribute, value="Jane \n Doe"))
 utest_1.VALUES.append(ATTRIBUTE_VALUE_DATE(definition=last_executed_attribute, value=datetime.today()))
+utest_1.VALUES.append(ATTRIBUTE_VALUE_INTEGER(definition=number_of_subtestcases_attribute, value=3))
 content.add_specobject(utest_1)
 
 utest_2 = SPEC_OBJECT(IDENTIFIER="UTEST-FIELD_CALCUL", spectype=test_object_type)
 utest_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=text_attribute, value="The SW shall test the correct functioning of the magnetic field calculation"))
 utest_2.VALUES.append(ATTRIBUTE_VALUE_STRING(definition=author_attribute, value="Jane \n Doe"))
 utest_2.VALUES.append(ATTRIBUTE_VALUE_DATE(definition=last_executed_attribute, value=datetime.today()))
+utest_2.VALUES.append(ATTRIBUTE_VALUE_INTEGER(definition=number_of_subtestcases_attribute, value=0))
 content.add_specobject(utest_2)
 
 # Configuration items
