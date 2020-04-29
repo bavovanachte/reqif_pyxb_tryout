@@ -522,19 +522,96 @@ class ATTRIBUTE_DEFINITION_INTEGER(raw_reqif.ATTRIBUTE_DEFINITION_INTEGER):
 
 raw_reqif.ATTRIBUTE_DEFINITION_INTEGER._SetSupersedingClass(ATTRIBUTE_DEFINITION_INTEGER)
 
+
+# Enum values
+
+class ENUM_VALUE(raw_reqif.ENUM_VALUE):
+    def __init__ (self, *args, **kw):
+        try:
+            value_local = kw.pop('value')
+        except KeyError:
+            value_local = None
+            pass
+        try:
+            key_local = kw.pop('key')
+        except KeyError:
+            key_local = None
+            pass
+        super().__init__(*args, **kw)
+        if value_local is not None and key_local is not None:
+            self.PROPERTIES=pyxb.BIND(EMBEDDED_VALUE(KEY=key_local, OTHER_CONTENT=value_local))
+        else:
+            self.PROPERTIES=pyxb.BIND()
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
+raw_reqif.ENUM_VALUE._SetSupersedingClass(ENUM_VALUE)
+
+class DATATYPE_DEFINITION_ENUMERATION(raw_reqif.DATATYPE_DEFINITION_ENUMERATION):
+    def __init__ (self, *args, **kw):
+        super().__init__(*args, **kw)
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
+        if not self.SPECIFIED_VALUES: self.SPECIFIED_VALUES = pyxb.BIND()
+
+    def add_enum_value(self, enum_value):
+        self.SPECIFIED_VALUES.append(enum_value)
+
+raw_reqif.DATATYPE_DEFINITION_ENUMERATION._SetSupersedingClass(DATATYPE_DEFINITION_ENUMERATION)
+
+class ATTRIBUTE_VALUE_ENUMERATION(raw_reqif.ATTRIBUTE_VALUE_ENUMERATION):
+    def __init__ (self, *args, **kw):
+        try:
+            definition = kw.pop('definition')
+            if isinstance(definition, str):
+                definition_local = definition
+            else:
+                definition_local = str(definition.IDENTIFIER)
+        except KeyError:
+            definition_local = None
+            pass
+        try:
+            value_local = kw.pop('value')
+            if not isinstance(value_local, str):
+                value_local = str(value_local.IDENTIFIER)
+        except KeyError:
+            value_local = None
+            pass
+        super().__init__(*args, **kw)
+        if definition_local: self.DEFINITION=definition_local
+        if value_local is not None:
+            self.VALUES=pyxb.BIND(value_local)
+        else:
+            self.VALUES=pyxb.BIND()
+
+raw_reqif.ATTRIBUTE_VALUE_ENUMERATION._SetSupersedingClass(ATTRIBUTE_VALUE_ENUMERATION)
+
+class ATTRIBUTE_DEFINITION_ENUMERATION(raw_reqif.ATTRIBUTE_DEFINITION_ENUMERATION):
+    def __init__ (self, *args, **kw):
+        try:
+            datatype = kw.pop('datatype')
+            if isinstance(datatype, str):
+                datatype_local = datatype
+            else:
+                datatype_local = str(datatype.IDENTIFIER)
+        except KeyError:
+            datatype_local = None
+            pass
+        super().__init__(*args, **kw)
+        if datatype_local: self.TYPE=datatype_local
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
+
+raw_reqif.ATTRIBUTE_DEFINITION_ENUMERATION._SetSupersedingClass(ATTRIBUTE_DEFINITION_ENUMERATION)
+
 # Classes not overridden (yet):
 # - RELATION_GROUP
 # - RELATION_GROUP_TYPE
+# - ALTERNATIVE_ID
+# - XHTML_CONTENT
+
+
+# Classes that won't be overridden:
 # - LOCAL_REF
 # - GLOBAL_REF
-# - ALTERNATIVE_ID
-
-# - ATTRIBUTE_DEFINITION_ENUMERATION
-# - DATATYPE_DEFINITION_ENUMERATION
-# - ATTRIBUTE_VALUE_ENUMERATION
-
-# - EMBEDDED_VALUE
-# - ENUM_VALUE
-# - REQ_IF_
+# - REQ_IF_ --> Not sure how.
 # - REQ_IF_TOOL_EXTENSION
-# - XHTML_CONTENT

@@ -33,6 +33,14 @@ datatype_real = DATATYPE_DEFINITION_REAL(LONG_NAME="Real", MIN=0.0, MAX=100.0, A
 content.add_datatype(datatype_real)
 datatype_unsigned_integer = DATATYPE_DEFINITION_INTEGER(LONG_NAME="Unsigned int", MIN=0, MAX=65535)
 content.add_datatype(datatype_unsigned_integer)
+datatype_approval_enum = DATATYPE_DEFINITION_ENUMERATION(LONG_NAME="Approval state")
+enum_approval_draft = ENUM_VALUE(key=0, value="Draft", LONG_NAME="Draft")
+datatype_approval_enum.add_enum_value(enum_approval_draft)
+enum_approval_rfr = ENUM_VALUE(key=1, value="Ready for review", LONG_NAME="Ready for review")
+datatype_approval_enum.add_enum_value(enum_approval_rfr)
+enum_approval_approved = ENUM_VALUE(key=2, value="Approved", LONG_NAME="Approved")
+datatype_approval_enum.add_enum_value(enum_approval_approved)
+content.add_datatype(datatype_approval_enum)
 
 # The specification types
 text_attribute = ATTRIBUTE_DEFINITION_XHTML(LONG_NAME="Text", datatype=datatype_xhtml)
@@ -42,6 +50,7 @@ author_attribute = ATTRIBUTE_DEFINITION_STRING(LONG_NAME="Author", datatype=data
 last_executed_attribute = ATTRIBUTE_DEFINITION_DATE(LONG_NAME="Last executed", datatype=datatype_date)
 approved_attribute = ATTRIBUTE_DEFINITION_BOOLEAN(LONG_NAME="Approved", datatype=datatype_boolean)
 number_of_subtestcases_attribute = ATTRIBUTE_DEFINITION_INTEGER(LONG_NAME="No. of subtestcases", datatype=datatype_unsigned_integer)
+approval_state_attribute = ATTRIBUTE_DEFINITION_ENUMERATION(LONG_NAME="Approval State", datatype=datatype_approval_enum, MULTI_VALUED=False)
 
 requirement_object_type = SPEC_OBJECT_TYPE(LONG_NAME= "Requirement")
 requirement_object_type.add_attribute(text_attribute)
@@ -58,6 +67,7 @@ configuration_object_type = SPEC_OBJECT_TYPE(LONG_NAME= "Configuration item")
 configuration_object_type.add_attribute(text_attribute)
 configuration_object_type.add_attribute(min_value_attribute)
 configuration_object_type.add_attribute(max_value_attribute)
+configuration_object_type.add_attribute(approval_state_attribute)
 
 spec_relation_type = SPEC_RELATION_TYPE(LONG_NAME="selflink")
 specification_type = SPECIFICATION_TYPE(LONG_NAME="doc_type")
@@ -104,12 +114,14 @@ config_clockspeed = SPEC_OBJECT(IDENTIFIER="CONFIG-CLOCKSPEED", spectype=configu
 config_clockspeed.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=text_attribute, value="A configuration parameter for configuring the clock speed shall be available"))
 config_clockspeed.VALUES.append(ATTRIBUTE_VALUE_REAL(definition=min_value_attribute, value=12.0))
 config_clockspeed.VALUES.append(ATTRIBUTE_VALUE_REAL(definition=max_value_attribute, value=36.0))
+config_clockspeed.VALUES.append(ATTRIBUTE_VALUE_ENUMERATION(definition=approval_state_attribute, value=enum_approval_draft))
 content.add_specobject(config_clockspeed)
 
 config_pwm_accuracy = SPEC_OBJECT(IDENTIFIER="CONFIG-PWM_ACCURACY", spectype=configuration_object_type)
 config_pwm_accuracy.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=text_attribute, value="A configuration parameter for setting the PWM accuracy (number of bits)"))
 config_pwm_accuracy.VALUES.append(ATTRIBUTE_VALUE_REAL(definition=min_value_attribute, value=0.0))
 config_pwm_accuracy.VALUES.append(ATTRIBUTE_VALUE_REAL(definition=max_value_attribute, value=16.0))
+config_pwm_accuracy.VALUES.append(ATTRIBUTE_VALUE_ENUMERATION(definition=approval_state_attribute, value=enum_approval_approved))
 content.add_specobject(config_pwm_accuracy)
 
 spec = SPECIFICATION(IDENTIFIER="SW_specification", spectype=specification_type, LONG_NAME="SW specification")
