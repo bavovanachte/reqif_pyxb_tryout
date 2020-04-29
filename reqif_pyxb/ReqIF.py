@@ -186,50 +186,6 @@ class SPEC_RELATION(raw_reqif.SPEC_RELATION):
 
 raw_reqif.SPEC_RELATION._SetSupersedingClass(SPEC_RELATION)
 
-
-class ATTRIBUTE_DEFINITION_XHTML(raw_reqif.ATTRIBUTE_DEFINITION_XHTML):
-    def __init__ (self, *args, **kw):
-        try:
-            datatype = kw.pop('datatype')
-            if isinstance(datatype, str):
-                datatype_local = datatype
-            else:
-                datatype_local = str(datatype.IDENTIFIER)
-        except KeyError:
-            datatype_local = None
-            pass
-        super().__init__(*args, **kw)
-        if datatype_local: self.TYPE=datatype_local
-        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
-        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
-
-raw_reqif.ATTRIBUTE_DEFINITION_XHTML._SetSupersedingClass(ATTRIBUTE_DEFINITION_XHTML)
-
-class ATTRIBUTE_VALUE_XHTML(raw_reqif.ATTRIBUTE_VALUE_XHTML):
-    def __init__ (self, *args, **kw):
-        try:
-            definition = kw.pop('definition')
-            if isinstance(definition, str):
-                definition_local = definition
-            else:
-                definition_local = str(definition.IDENTIFIER)
-        except KeyError:
-            definition_local = None
-            pass
-        try:
-            value_local = kw.pop('value')
-        except KeyError:
-            value_local = None
-            pass
-        super().__init__(*args, **kw)
-        if definition_local: self.DEFINITION=definition_local
-        if value_local:
-            self.THE_VALUE=pyxb.BIND(div=value_local)
-        else:
-            self.THE_VALUE=pyxb.BIND()
-
-raw_reqif.ATTRIBUTE_VALUE_XHTML._SetSupersedingClass(ATTRIBUTE_VALUE_XHTML)
-
 class SPEC_OBJECT_TYPE(raw_reqif.SPEC_OBJECT_TYPE):
     def __init__(self, *args, **kw):
         super().__init__(*args, **kw)
@@ -259,6 +215,161 @@ class SPECIFICATION_TYPE(raw_reqif.SPECIFICATION_TYPE):
 
 raw_reqif.SPECIFICATION_TYPE._SetSupersedingClass(SPECIFICATION_TYPE)
 
+# XHTML values
+
+class DATATYPE_DEFINITION_XHTML(raw_reqif.DATATYPE_DEFINITION_XHTML):
+    def __init__ (self, *args, **kw):
+        super().__init__(*args, **kw)
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
+
+raw_reqif.DATATYPE_DEFINITION_XHTML._SetSupersedingClass(DATATYPE_DEFINITION_XHTML)
+
+class ATTRIBUTE_VALUE_XHTML(raw_reqif.ATTRIBUTE_VALUE_XHTML):
+    def __init__ (self, *args, **kw):
+        try:
+            definition = kw.pop('definition')
+            if isinstance(definition, str):
+                definition_local = definition
+            else:
+                definition_local = str(definition.IDENTIFIER)
+        except KeyError:
+            definition_local = None
+            pass
+        try:
+            value_local = kw.pop('value')
+        except KeyError:
+            value_local = None
+            pass
+        super().__init__(*args, **kw)
+        if definition_local: self.DEFINITION=definition_local
+        if value_local:
+            self.THE_VALUE=pyxb.BIND(div=value_local)
+        else:
+            self.THE_VALUE=pyxb.BIND()
+
+raw_reqif.ATTRIBUTE_VALUE_XHTML._SetSupersedingClass(ATTRIBUTE_VALUE_XHTML)
+
+class ATTRIBUTE_DEFINITION_XHTML(raw_reqif.ATTRIBUTE_DEFINITION_XHTML):
+    def __init__ (self, *args, **kw):
+        try:
+            datatype = kw.pop('datatype')
+            if isinstance(datatype, str):
+                datatype_local = datatype
+            else:
+                datatype_local = str(datatype.IDENTIFIER)
+        except KeyError:
+            datatype_local = None
+            pass
+        super().__init__(*args, **kw)
+        if datatype_local: self.TYPE=datatype_local
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
+
+raw_reqif.ATTRIBUTE_DEFINITION_XHTML._SetSupersedingClass(ATTRIBUTE_DEFINITION_XHTML)
+
+
+# String values
+
+class DATATYPE_DEFINITION_STRING(raw_reqif.DATATYPE_DEFINITION_STRING):
+    def __init__ (self, *args, **kw):
+        super().__init__(*args, **kw)
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
+
+raw_reqif.DATATYPE_DEFINITION_STRING._SetSupersedingClass(DATATYPE_DEFINITION_STRING)
+
+class ATTRIBUTE_VALUE_STRING(raw_reqif.ATTRIBUTE_VALUE_STRING):
+    def __init__ (self, *args, **kw):
+        try:
+            definition = kw.pop('definition')
+            if isinstance(definition, str):
+                definition_local = definition
+            else:
+                definition_local = str(definition.IDENTIFIER)
+        except KeyError:
+            definition_local = None
+            pass
+        try:
+            value_local = kw.pop('value')
+        except KeyError:
+            value_local = None
+            pass
+        super().__init__(*args, **kw)
+        if definition_local: self.DEFINITION=definition_local
+        if value_local: self.THE_VALUE=value_local
+
+raw_reqif.ATTRIBUTE_VALUE_STRING._SetSupersedingClass(ATTRIBUTE_VALUE_STRING)
+
+class ATTRIBUTE_DEFINITION_STRING(raw_reqif.ATTRIBUTE_DEFINITION_STRING):
+    def __init__ (self, *args, **kw):
+        try:
+            datatype = kw.pop('datatype')
+            if isinstance(datatype, str):
+                datatype_local = datatype
+            else:
+                datatype_local = str(datatype.IDENTIFIER)
+        except KeyError:
+            datatype_local = None
+            pass
+        super().__init__(*args, **kw)
+        if datatype_local: self.TYPE=datatype_local
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
+
+raw_reqif.ATTRIBUTE_DEFINITION_STRING._SetSupersedingClass(ATTRIBUTE_DEFINITION_STRING)
+
+
+# Date values
+
+class DATATYPE_DEFINITION_DATE(raw_reqif.DATATYPE_DEFINITION_DATE):
+    def __init__ (self, *args, **kw):
+        super().__init__(*args, **kw)
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
+
+raw_reqif.DATATYPE_DEFINITION_DATE._SetSupersedingClass(DATATYPE_DEFINITION_DATE)
+
+class ATTRIBUTE_VALUE_DATE(raw_reqif.ATTRIBUTE_VALUE_DATE):
+    def __init__ (self, *args, **kw):
+        try:
+            definition = kw.pop('definition')
+            if isinstance(definition, str):
+                definition_local = definition
+            else:
+                definition_local = str(definition.IDENTIFIER)
+        except KeyError:
+            definition_local = None
+            pass
+        try:
+            value_local = kw.pop('value')
+        except KeyError:
+            value_local = None
+            pass
+        super().__init__(*args, **kw)
+        if definition_local: self.DEFINITION=definition_local
+        if value_local: self.THE_VALUE=value_local
+
+raw_reqif.ATTRIBUTE_VALUE_DATE._SetSupersedingClass(ATTRIBUTE_VALUE_DATE)
+
+class ATTRIBUTE_DEFINITION_DATE(raw_reqif.ATTRIBUTE_DEFINITION_DATE):
+    def __init__ (self, *args, **kw):
+        try:
+            datatype = kw.pop('datatype')
+            if isinstance(datatype, str):
+                datatype_local = datatype
+            else:
+                datatype_local = str(datatype.IDENTIFIER)
+        except KeyError:
+            datatype_local = None
+            pass
+        super().__init__(*args, **kw)
+        if datatype_local: self.TYPE=datatype_local
+        if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
+        if not self.IDENTIFIER: self.IDENTIFIER = generate_unique_id()
+
+raw_reqif.ATTRIBUTE_DEFINITION_DATE._SetSupersedingClass(ATTRIBUTE_DEFINITION_DATE)
+
 # Classes not overridden (yet):
 # - RELATION_GROUP
 # - RELATION_GROUP_TYPE
@@ -266,24 +377,21 @@ raw_reqif.SPECIFICATION_TYPE._SetSupersedingClass(SPECIFICATION_TYPE)
 # - GLOBAL_REF
 # - ALTERNATIVE_ID
 # - ATTRIBUTE_DEFINITION_BOOLEAN
-# - ATTRIBUTE_DEFINITION_DATE
-# - ATTRIBUTE_DEFINITION_ENUMERATION
-# - ATTRIBUTE_DEFINITION_INTEGER
-# - ATTRIBUTE_DEFINITION_REAL
-# - ATTRIBUTE_DEFINITION_STRING
 # - ATTRIBUTE_VALUE_BOOLEAN
-# - ATTRIBUTE_VALUE_DATE
-# - ATTRIBUTE_VALUE_ENUMERATION
-# - ATTRIBUTE_VALUE_INTEGER
-# - ATTRIBUTE_VALUE_REAL
-# - ATTRIBUTE_VALUE_STRING
 # - DATATYPE_DEFINITION_BOOLEAN
-# - DATATYPE_DEFINITION_DATE
+
+# - ATTRIBUTE_DEFINITION_ENUMERATION
 # - DATATYPE_DEFINITION_ENUMERATION
+# - ATTRIBUTE_VALUE_ENUMERATION
+
+# - ATTRIBUTE_DEFINITION_INTEGER
+# - ATTRIBUTE_VALUE_INTEGER
 # - DATATYPE_DEFINITION_INTEGER
+
+# - ATTRIBUTE_DEFINITION_REAL
+# - ATTRIBUTE_VALUE_REAL
 # - DATATYPE_DEFINITION_REAL
-# - DATATYPE_DEFINITION_STRING
-# - DATATYPE_DEFINITION_XHTML
+
 # - EMBEDDED_VALUE
 # - ENUM_VALUE
 # - REQ_IF_
