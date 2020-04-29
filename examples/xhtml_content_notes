@@ -1,0 +1,14 @@
+xml_string = '<div>XY Block Adapter shall translate the Communication to TMN-Block in a bidirectional manner and support all functionalities of a TMN-Block.<br/> <object data="files/rmf-6d04fefa-8350-4870-b2bf-f4923148d064_diagram_20190628-1304.42265.mxg.png" name="diagram_20190628-1304.42265.mxg.png" type="image/png"/></div>'
+# xhtml_content = xhtml_div_type(xml_string, _from_xml=True)
+# xhtml_content = xhtml_div_type("<div><pre>Some Text</pre></div>", _from_xml=True)
+# xhtml_content = XHTML_CONTENT(_dom_node = node)
+# xhtml_content = CreateFromDocument(xml_string, location_base=xhtml_div_type._XSDLocation)
+xhtml_content2 = ATTRIBUTE_VALUE_XHTML(definition=col1_attribute, value=xml_string)
+
+# print(requirement_2.VALUES.ATTRIBUTE_VALUE_XHTML[0].THE_VALUE.div.__dict__, file=sys.stderr)
+# value2 = ATTRIBUTE_VALUE_XHTML(definition=string_attribute)
+# value2.THE_VALUE.div = pyxb.BIND(pre=["asf"])
+# print(value.THE_VALUE, file=sys.stderr)
+# requirement_2.VALUES.append(value2)
+requirement_2.VALUES.append(xhtml_content2)
+content.add_specobject(requirement_2)
