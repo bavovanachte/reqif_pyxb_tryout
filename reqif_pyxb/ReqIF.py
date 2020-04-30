@@ -245,7 +245,7 @@ class ATTRIBUTE_VALUE_XHTML(raw_reqif.ATTRIBUTE_VALUE_XHTML):
         if definition_local: self.DEFINITION=definition_local
         if value_local:
             self.THE_VALUE=pyxb.BIND(div=value_local)
-        else:
+        elif self.THE_VALUE is None:
             self.THE_VALUE=pyxb.BIND()
 
 raw_reqif.ATTRIBUTE_VALUE_XHTML._SetSupersedingClass(ATTRIBUTE_VALUE_XHTML)

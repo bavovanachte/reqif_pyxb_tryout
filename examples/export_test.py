@@ -87,8 +87,23 @@ requirement_1.VALUES.append(ATTRIBUTE_VALUE_BOOLEAN(definition=approved_attribut
 content.add_specobject(requirement_1)
 
 requirement_2 = SPEC_OBJECT(IDENTIFIER="SWRQT-FIELD_CALCUL", spectype=requirement_object_type)
-xml_string = '<div>XY Block Adapter shall translate the Communication to TMN-Block in a bidirectional manner and support all functionalities of a TMN-Block.<br/> <object data="files/rmf-6d04fefa-8350-4870-b2bf-f4923148d064_diagram_20190628-1304.42265.mxg.png" name="diagram_20190628-1304.42265.mxg.png" type="image/png"/></div>'
-requirement_2.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=text_attribute, value=xml_string))
+
+xml_string = '''
+Here is a list that isn't actually XHTML, but we need the formatting to remain preserved:
+
+- Item 1
+- Item 2
+
+# Some heading from markdown
+
+.. some_sphinx_directive:
+    :some_sphinx_directive_attribute:
+
+    Some text inside the sphinx directive
+'''
+div_type = xhtml_div_type(pre=[xml_string])
+att_value_xhtml = ATTRIBUTE_VALUE_XHTML(definition=text_attribute, THE_VALUE=XHTML_CONTENT(div=div_type))
+requirement_2.VALUES.append(att_value_xhtml)
 requirement_2.VALUES.append(ATTRIBUTE_VALUE_STRING(definition=author_attribute, value="John Doe"))
 requirement_2.VALUES.append(ATTRIBUTE_VALUE_BOOLEAN(definition=approved_attribute, value=True))
 content.add_specobject(requirement_2)
