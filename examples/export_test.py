@@ -69,7 +69,7 @@ configuration_object_type.add_attribute(min_value_attribute)
 configuration_object_type.add_attribute(max_value_attribute)
 configuration_object_type.add_attribute(approval_state_attribute)
 
-spec_relation_type = SPEC_RELATION_TYPE(LONG_NAME="selflink")
+spec_relation_type = SPEC_RELATION_TYPE(LONG_NAME="Relates to")
 specification_type = SPECIFICATION_TYPE(LONG_NAME="doc_type")
 
 # a.CORE_CONTENT.REQ_IF_CONTENT.SPEC_TYPES = pyxb.BIND()
@@ -81,9 +81,9 @@ content.add_spectype(specification_type)
 
 # The actual requirements
 requirement_1 = SPEC_OBJECT(IDENTIFIER="SWRQT-ANGLE_CALCUL", spectype=requirement_object_type)
-requirement_1.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=text_attribute, value="The SW shall calculate an angle"))
-requirement_1.VALUES.append(ATTRIBUTE_VALUE_STRING(definition=author_attribute, value="John Doe"))
-requirement_1.VALUES.append(ATTRIBUTE_VALUE_BOOLEAN(definition=approved_attribute, value=False))
+requirement_1.set_value("Text", "The SW shall calculate an angle")
+requirement_1.set_value("Author", "John Doe")
+requirement_1.set_value("Approved", False)
 content.add_specobject(requirement_1)
 
 requirement_2 = SPEC_OBJECT(IDENTIFIER="SWRQT-FIELD_CALCUL", spectype=requirement_object_type)
@@ -110,10 +110,10 @@ content.add_specobject(requirement_2)
 
 # Test cases
 utest_1 = SPEC_OBJECT(IDENTIFIER="UTEST-ANGLE_CALCUL", spectype=test_object_type)
-utest_1.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=text_attribute, value="The SW shall test the correct functioning of the angle calculation"))
-utest_1.VALUES.append(ATTRIBUTE_VALUE_STRING(definition=author_attribute, value="Jane \n Doe"))
-utest_1.VALUES.append(ATTRIBUTE_VALUE_DATE(definition=last_executed_attribute, value=datetime.today()))
-utest_1.VALUES.append(ATTRIBUTE_VALUE_INTEGER(definition=number_of_subtestcases_attribute, value=3))
+utest_1.set_value("Text", "The SW shall test the correct functioning of the angle calculation")
+utest_1.set_value("Author", "Jane \n Doe")
+utest_1.set_value("Last executed", datetime.today())
+utest_1.set_value("No. of subtestcases", 3)
 content.add_specobject(utest_1)
 
 utest_2 = SPEC_OBJECT(IDENTIFIER="UTEST-FIELD_CALCUL", spectype=test_object_type)
@@ -126,10 +126,10 @@ content.add_specobject(utest_2)
 # Configuration items
 
 config_clockspeed = SPEC_OBJECT(IDENTIFIER="CONFIG-CLOCKSPEED", spectype=configuration_object_type)
-config_clockspeed.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=text_attribute, value="A configuration parameter for configuring the clock speed shall be available"))
-config_clockspeed.VALUES.append(ATTRIBUTE_VALUE_REAL(definition=min_value_attribute, value=12.0))
-config_clockspeed.VALUES.append(ATTRIBUTE_VALUE_REAL(definition=max_value_attribute, value=36.0))
-config_clockspeed.VALUES.append(ATTRIBUTE_VALUE_ENUMERATION(definition=approval_state_attribute, value=enum_approval_draft))
+config_clockspeed.set_value("Text", "A configuration parameter for configuring the clock speed shall be available")
+config_clockspeed.set_value("Minimum Value", 12.0)
+config_clockspeed.set_value("Maximum Value", 36.0)
+config_clockspeed.set_value("Approval State", enum_approval_draft)
 content.add_specobject(config_clockspeed)
 
 config_pwm_accuracy = SPEC_OBJECT(IDENTIFIER="CONFIG-PWM_ACCURACY", spectype=configuration_object_type)
@@ -155,12 +155,7 @@ config_params.add_spec_hierarchy(SPEC_HIERARCHY(spec_object=config_pwm_accuracy)
 content.add_specification(config_params)
 
 # Relationships between requirements
-content.add_spec_relation(
-    SPEC_RELATION(
-        source_spec_object=requirement_1,
-        target_spec_object=requirement_2,
-        link_type=spec_relation_type))
-
+content.add_spec_relation_by_ID("SWRQT-ANGLE_CALCUL", "SWRQT-FIELD_CALCUL", "Relates to")
 content.add_spec_relation(
     SPEC_RELATION(
         source_spec_object=utest_1,

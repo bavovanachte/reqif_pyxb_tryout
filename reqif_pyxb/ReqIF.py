@@ -36,6 +36,9 @@ import uuid
 from pyxb.binding.datatypes import dateTime
 
 
+class ReqIfException(Exception):
+    pass
+
 def generate_unique_id():
     return ('x' + str(uuid.uuid1()))
 
@@ -69,6 +72,15 @@ class REQ_IF_CONTENT(raw_reqif.REQ_IF_CONTENT):
         self.SPECIFICATIONS.append(specification)
     def add_spec_relation(self, spec_relation):
         self.SPEC_RELATIONS.append(spec_relation)
+    def add_spec_relation_by_ID(self, req_id_source, req_id_target, relation_long_name):
+        relation_type_id = None
+        for spec_type in self.SPEC_TYPES.SPEC_RELATION_TYPE:
+            if spec_type.LONG_NAME == relation_long_name:
+                relation_type_id = spec_type.IDENTIFIER
+        if not relation_type_id:
+            raise ReqIfException("No relation type value was found matching the long_name provided: " + relation_long_name)
+        new_relation = SPEC_RELATION(SOURCE=req_id_source, TARGET=req_id_target, TYPE=pyxb.BIND(relation_type_id))
+        self.SPEC_RELATIONS.append(new_relation)
     def add_spec_relation_group(self, spec_relation_group):
         self.SPEC_RELATION_GROUPS.append(spec_relation_group)
 raw_reqif.REQ_IF_CONTENT._SetSupersedingClass(REQ_IF_CONTENT)
@@ -88,6 +100,7 @@ class REQ_IF_HEADER(raw_reqif.REQ_IF_HEADER):
 raw_reqif.REQ_IF_HEADER._SetSupersedingClass(REQ_IF_HEADER)
 
 class SPEC_OBJECT(raw_reqif.SPEC_OBJECT):
+    spec_type_reference = None
     def __init__ (self, *args, **kw):
         try:
             spectype = kw.pop('spectype')
@@ -95,6 +108,7 @@ class SPEC_OBJECT(raw_reqif.SPEC_OBJECT):
                 spectype_local = spectype
             else:
                 spectype_local = str(spectype.IDENTIFIER)
+                self.spec_type_reference = spectype
         except KeyError:
             spectype_local = None
             pass
@@ -102,6 +116,45 @@ class SPEC_OBJECT(raw_reqif.SPEC_OBJECT):
         if spectype_local: self.TYPE=spectype_local
         if not self.LAST_CHANGE: self.LAST_CHANGE = dateTime.today()
         if not self.VALUES: self.VALUES = pyxb.BIND()
+
+    def set_value(self, long_name, value):
+        if self.spec_type_reference is None:
+            raise ReqIfException("No spec type object is present. Cannot use name-based value setting")
+        else:
+            key_found = False
+            for spec_attr in self.spec_type_reference.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_STRING:
+                if spec_attr.LONG_NAME == long_name:
+                    key_found = True
+                    self.VALUES.append(ATTRIBUTE_VALUE_STRING(definition=spec_attr, value=value))
+            for spec_attr in self.spec_type_reference.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_XHTML:
+                if spec_attr.LONG_NAME == long_name:
+                    key_found = True
+                    self.VALUES.append(ATTRIBUTE_VALUE_XHTML(definition=spec_attr, value=value))
+            for spec_attr in self.spec_type_reference.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_DATE:
+                if spec_attr.LONG_NAME == long_name:
+                    key_found = True
+                    self.VALUES.append(ATTRIBUTE_VALUE_DATE(definition=spec_attr, value=value))
+            for spec_attr in self.spec_type_reference.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_INTEGER:
+                if spec_attr.LONG_NAME == long_name:
+                    key_found = True
+                    self.VALUES.append(ATTRIBUTE_VALUE_INTEGER(definition=spec_attr, value=value))
+            for spec_attr in self.spec_type_reference.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_REAL:
+                if spec_attr.LONG_NAME == long_name:
+                    key_found = True
+                    self.VALUES.append(ATTRIBUTE_VALUE_REAL(definition=spec_attr, value=value))
+            for spec_attr in self.spec_type_reference.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_ENUMERATION:
+                if spec_attr.LONG_NAME == long_name:
+                    key_found = True
+                    self.VALUES.append(ATTRIBUTE_VALUE_ENUMERATION(definition=spec_attr, value=value))
+            for spec_attr in self.spec_type_reference.SPEC_ATTRIBUTES.ATTRIBUTE_DEFINITION_BOOLEAN:
+                if spec_attr.LONG_NAME == long_name:
+                    key_found = True
+                    self.VALUES.append(ATTRIBUTE_VALUE_BOOLEAN(definition=spec_attr, value=value))
+            if not key_found:
+                raise ReqIfException("No attribute value was found matching the long_name provided: " + long_name)
+
+
+
 
 raw_reqif.SPEC_OBJECT._SetSupersedingClass(SPEC_OBJECT)
 
