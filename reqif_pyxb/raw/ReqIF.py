@@ -1,7 +1,7 @@
 # ./pyxb/bundles/reqif/raw/ReqIF.py
 # -*- coding: utf-8 -*-
 # PyXB bindings for NM:7d260e1204a98742c478d4bbddd9fcc89ef5ca5b
-# Generated 2020-04-19 18:31:53.478204 by PyXB version 1.2.7-DEV using Python 3.6.10.final.0
+# Generated 2020-04-19 18:31:53.478204 by PyXB version 1.2.6 using Python 3.6.10.final.0
 # Namespace http://www.omg.org/spec/ReqIF/20110401/reqif.xsd
 
 from __future__ import unicode_literals
@@ -17,7 +17,7 @@ import pyxb.utils.six as _six
 _GenerationUID = pyxb.utils.utility.UniqueIdentifier('urn:uuid:46b87c24-825b-11ea-973b-185e0f0f4bc8')
 
 # Version of PyXB used to generate the bindings
-_PyXBVersion = '1.2.7-DEV'
+_PyXBVersion = '1.2.6'
 # Generated bindings are not compatible across PyXB versions
 if pyxb.__version__ != _PyXBVersion:
     raise pyxb.PyXBVersionError(_PyXBVersion)
