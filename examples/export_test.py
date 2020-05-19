@@ -7,7 +7,7 @@ from pyxb.utils import six
 import xml
 from datetime import datetime
 
-from reqif_pyxb.raw._nsgroup import xhtml_div_type # {http://www.omg.org/spec/ReqIF/20110401/reqif.xsd}ATTRIBUTE-DEFINITION-ENUMERATION
+from reqif_pyxb.raw._nsgroup import xhtml_div_type
 
 # Construct the header
 a = REQ_IF(
@@ -15,7 +15,7 @@ a = REQ_IF(
     CORE_CONTENT=pyxb.BIND(),
     TOOL_EXTENSIONS=pyxb.BIND(),
 )
-a.THE_HEADER.REQ_IF_HEADER=REQ_IF_HEADER()
+a.THE_HEADER.REQ_IF_HEADER = REQ_IF_HEADER()
 
 content = REQ_IF_CONTENT()
 
@@ -49,21 +49,24 @@ max_value_attribute = ATTRIBUTE_DEFINITION_REAL(LONG_NAME="Maximum Value", datat
 author_attribute = ATTRIBUTE_DEFINITION_STRING(LONG_NAME="Author", datatype=datatype_string)
 last_executed_attribute = ATTRIBUTE_DEFINITION_DATE(LONG_NAME="Last executed", datatype=datatype_date)
 approved_attribute = ATTRIBUTE_DEFINITION_BOOLEAN(LONG_NAME="Approved", datatype=datatype_boolean)
-number_of_subtestcases_attribute = ATTRIBUTE_DEFINITION_INTEGER(LONG_NAME="No. of subtestcases", datatype=datatype_unsigned_integer)
-approval_state_attribute = ATTRIBUTE_DEFINITION_ENUMERATION(LONG_NAME="Approval State", datatype=datatype_approval_enum, MULTI_VALUED=False)
+number_of_subtestcases_attribute = ATTRIBUTE_DEFINITION_INTEGER(LONG_NAME="No. of subtestcases",
+                                                                datatype=datatype_unsigned_integer)
+approval_state_attribute = ATTRIBUTE_DEFINITION_ENUMERATION(LONG_NAME="Approval State",
+                                                            datatype=datatype_approval_enum,
+                                                            MULTI_VALUED=False)
 
-requirement_object_type = SPEC_OBJECT_TYPE(LONG_NAME= "Requirement")
+requirement_object_type = SPEC_OBJECT_TYPE(LONG_NAME="Requirement")
 requirement_object_type.add_attribute(text_attribute)
 requirement_object_type.add_attribute(author_attribute)
 requirement_object_type.add_attribute(approved_attribute)
 
-test_object_type = SPEC_OBJECT_TYPE(LONG_NAME= "Test Case")
+test_object_type = SPEC_OBJECT_TYPE(LONG_NAME="Test Case")
 test_object_type.add_attribute(text_attribute)
 test_object_type.add_attribute(author_attribute)
 test_object_type.add_attribute(last_executed_attribute)
 test_object_type.add_attribute(number_of_subtestcases_attribute)
 
-configuration_object_type = SPEC_OBJECT_TYPE(LONG_NAME= "Configuration item")
+configuration_object_type = SPEC_OBJECT_TYPE(LONG_NAME="Configuration item")
 configuration_object_type.add_attribute(text_attribute)
 configuration_object_type.add_attribute(min_value_attribute)
 configuration_object_type.add_attribute(max_value_attribute)
@@ -168,6 +171,6 @@ a.CORE_CONTENT.REQ_IF_CONTENT = content
 a.TOOL_EXTENSIONS.REQ_IF_TOOL_EXTENSION.append(REQ_IF_TOOL_EXTENSION())
 
 try:
-    print(a.toxml());
+    print(a.toxml())
 except Exception as e:
     print(e.details())
