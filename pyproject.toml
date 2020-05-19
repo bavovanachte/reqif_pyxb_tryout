@@ -11,13 +11,7 @@ pyxb = "^1.2.6"
 [tool.poetry.dev-dependencies]
 nose = "^1.3.7"
 tox = "^3.14.6"
-
-[build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
-
-
-# Pylint configurations
+pylint = "^2.5.2"
 
 [tool.pylint.messages_control]
 disable = """unused-wildcard-import"""
@@ -27,3 +21,7 @@ ignore = "raw"
 
 [tool.pylint.format]
 max-line-length = "120"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
