@@ -14,10 +14,10 @@ tox = "^3.14.6"
 pylint = "^2.5.2"
 
 [tool.pylint.messages_control]
-disable = """unused-wildcard-import, invalid-name, R"""
+disable = """,unused-wildcard-import, wildcard-import, invalid-name, R, multiple-statements, no-member,"""
 
 [tool.pylint.master]
-ignore = "raw"
+ignore = "raw, examples" # Doesn't seem to work yet. See https://github.com/PyCQA/pylint/issues/3630
 
 [tool.pylint.format]
 max-line-length = "120"
